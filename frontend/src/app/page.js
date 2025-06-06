@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 export default function Page() {
-
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
       {/* Хедер */}
@@ -41,22 +40,15 @@ export default function Page() {
       </section>
 
       {/* Баннер */}
-      <section className="container mx-auto mt-12 px-6">
-        <div className="relative w-full h-64 sm:h-96 rounded-lg overflow-hidden shadow-lg">
-          <Image
-            src="/banner.png" 
-            alt="Большая картинка"
-            layout="fill"
-            objectFit="cover"
-            className="brightness-90"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            {/* <h1 className="text-3xl sm:text-5xl text-white font-bold">
-  Большая картинка
-</h1> */}
-
-          </div>
-        </div>
+      <section className="relative w-full min-h-[calc(100vh-80px)] mt-8 flex items-center justify-center">
+        <Image
+          src="/banner.png"
+          alt="Большая картинка"
+          layout="fill"
+          objectFit="cover"
+          className="brightness-90"
+        />
+        {/* Здесь можно добавить текст поверх баннера, если нужно */}
       </section>
     </div>
   );
