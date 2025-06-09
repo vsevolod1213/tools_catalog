@@ -34,7 +34,7 @@ export default function Page() {
           {/* Левое меню */}
           <nav className="flex flex-wrap gap-3 items-center">
             <div className="relative group">
-              <button className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+              <button className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
                 Каталог
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
@@ -52,20 +52,20 @@ export default function Page() {
                 </a>
               </div>
             </div>
-            <a href="#" className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+            <a href="#" className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
               Услуги
             </a>
-            <a href="#" className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+            <a href="#" className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
               🛒 Корзина
             </a>
           </nav>
 
           {/* Поиск в хедере */}
           <div
-            className={`transition-all duration-700 ease-in-out transform ${
+            className={`transition-all duration-400 ease-in-out transform ${
               isSticky
                 ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                : "opacity-0 translate-y-5"
             } absolute left-1/2 -translate-x-1/2 top-full mt-[-28px] w-full max-w-md`}
           >
             <input
@@ -73,7 +73,7 @@ export default function Page() {
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full bg-white/40 border border-gray-300 rounded-full py-2 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
 
