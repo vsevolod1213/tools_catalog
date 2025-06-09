@@ -62,11 +62,11 @@ export default function Page() {
 
           {/* Поиск в хедере */}
           <div
-            className={`transition-all duration-400 ease-in-out transform ${
+            className={`transition-all duration-100 ease-in-out transform ${
               isSticky
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
-            } absolute left-1/2 -translate-x-1/2 top-full mt-[-68px] w-full max-w-md`}
+            } absolute left-1/2 -translate-x-1/2 top-full mt-[-65px] w-full max-w-md`}
           >
             <input
               type="text"
