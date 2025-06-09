@@ -1,3 +1,5 @@
+"use client"; // Добавляем эту строку первой
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
