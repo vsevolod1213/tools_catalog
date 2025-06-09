@@ -84,7 +84,7 @@ export default function Page() {
           {/* Номер телефона */}
           <div className="text-gray-200 font-medium hidden sm:block">
             Номер для связи:{" "}
-            <span className="text-white font-semibold">89435828578</span>
+            <span className="text-white font-semibold">Жопа</span>
           </div>
         </div>
       </header>
