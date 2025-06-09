@@ -91,7 +91,7 @@ export default function Page() {
           {/* Номер телефона */}
           <div className="text-gray-200 font-medium hidden sm:block">
             Номер для связи:{" "}
-            <span className="text-white font-semibold">жопа</span>
+            <span className="text-white font-semibold">+7(812) 345 25-25</span>
           </div>
         </div>
       </header>
