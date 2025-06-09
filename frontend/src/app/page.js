@@ -65,8 +65,8 @@ export default function Page() {
             className={`transition-all duration-400 ease-in-out transform ${
               isSticky
                 ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-5"
-            } absolute left-1/2 -translate-x-1/2 top-full mt-[-38px] w-full max-w-md`}
+                : "opacity-0 translate-y-10"
+            } absolute left-1/2 -translate-x-1/2 top-full mt-[-60px] w-full max-w-md`}
           >
             <input
               type="text"
