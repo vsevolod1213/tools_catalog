@@ -30,12 +30,12 @@ export default function Page() {
 
       {/* Хедер */}
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
-        <div className="container mx-auto flex justify-between items-center py-4 px-6">
+        <div className="container mx-auto flex flex-wrap items-center justify-between py-4 px-6 gap-4">
           {/* Левое меню */}
-          <nav className="flex space-x-3 items-center">
+          <nav className="flex flex-wrap items-center gap-3">
             {/* Каталог с выпадающим меню */}
             <div className="relative group">
-              <button className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg">
+              <button className="px-5 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-sm md:text-lg">
                 Каталог
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
@@ -57,7 +57,7 @@ export default function Page() {
             {/* Услуги */}
             <a
               href="#"
-              className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg"
+              className="px-5 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-sm md:text-lg"
             >
               Услуги
             </a>
@@ -65,7 +65,7 @@ export default function Page() {
             {/* Корзина */}
             <a
               href="#"
-              className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg"
+              className="px-5 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-sm md:text-lg"
             >
               🛒 Корзина
             </a>
@@ -73,7 +73,7 @@ export default function Page() {
 
           {/* Поиск в хедере */}
           <div
-            className={`transition-transform duration-500 ease-in-out ${
+            className={`transition-all duration-700 ease-in-out ${
               isSticky
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-full"
@@ -84,29 +84,31 @@ export default function Page() {
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="bg-white/40 border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+              className="w-64 sm:w-80 bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
 
           {/* Номер телефона */}
-          <div className="text-gray-200 font-medium hidden sm:block">
+          <div className="text-gray-200 font-medium whitespace-nowrap">
             Номер для связи:{" "}
-            <span className="text-white font-semibold">+7 (812) 345 25-25</span>
+            <span className="text-white font-semibold">
+              +7 (812) 345 25-25
+            </span>
           </div>
         </div>
       </header>
 
       {/* Основной блок */}
-      <main className="pt-28 px-6 container mx-auto">
+      <main className="pt-32 px-6 container mx-auto">
         {/* Поиск в основном блоке */}
         {!isSticky && (
-          <div className="w-full max-w-md mx-auto mb-8 transition-all duration-500">
+          <div className="w-full max-w-md mx-auto mb-8 transition-all duration-700 ease-in-out">
             <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+              className="w-64 sm:w-80 bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
         )}
