@@ -66,14 +66,34 @@ export default function Page() {
       </header>
 
       {/* Основной блок */}
-      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] pt-20 px-6">
+      <main className="flex flex-col items-center justify-start min-h-[calc(100vh-80px)] pt-10 px-6">
         {/* Поле поиска */}
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md mb-8">
           <input
             type="text"
             placeholder="Поиск товаров"
             className="w-full max-w-md bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
           />
+        </div>
+
+        {/* Каталог товаров */}
+        <div className="w-full max-w-screen-xl overflow-x-auto">
+          <div className="flex space-x-4 py-4">
+            {/* Пример карточек товаров */}
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+              <div
+                key={item}
+                className="w-60 bg-white/70 rounded-lg shadow-md p-4 flex-shrink-0 backdrop-blur-md"
+              >
+                <div className="h-40 bg-gray-300 rounded mb-2"></div>
+                <h3 className="text-lg font-semibold">Товар {item}</h3>
+                <p className="text-sm text-gray-700">Описание товара {item}</p>
+                <button className="mt-2 px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-colors">
+                  Подробнее
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </div>
