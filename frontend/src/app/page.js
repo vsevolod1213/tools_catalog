@@ -66,7 +66,7 @@ export default function Page() {
               isSticky
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
-            } absolute left-1/2 -translate-x-1/2 top-full mt-[-60px] w-full max-w-md`}
+            } absolute left-1/2 -translate-x-1/2 top-full mt-[-68px] w-full max-w-md`}
           >
             <input
               type="text"
