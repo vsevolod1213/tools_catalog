@@ -30,7 +30,7 @@ export default function Page() {
 
       {/* Хедер */}
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
-        <div className="container mx-auto flex flex-wrap justify-between items-center py-4 px-6 gap-3">
+        <div className="container mx-auto flex flex-wrap justify-between items-center py-4 px-6">
           {/* Левое меню */}
           <nav className="flex flex-wrap gap-3 items-center">
             <div className="relative group">
@@ -60,23 +60,25 @@ export default function Page() {
             </a>
           </nav>
 
-          {/* Поиск */}
+          {/* Поиск в хедере */}
           <div
-            className={`transition-transform duration-700 ease-in-out ${
-              isSticky ? "translate-y-0 opacity-100" : "translate-y-0 opacity-100"
-            } w-full sm:w-auto flex-1 sm:flex-initial`}
+            className={`transition-all duration-700 ease-in-out transform ${
+              isSticky
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            } absolute left-1/2 -translate-x-1/2 top-full mt-[-28px] w-full max-w-md`}
           >
             <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full max-w-md bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+              className="w-full bg-white/40 border border-gray-300 rounded-full py-2 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
 
           {/* Телефон */}
-          <div className="text-gray-200 font-medium whitespace-nowrap">
+          <div className="text-gray-200 font-medium hidden sm:block ml-auto">
             Номер для связи:{" "}
             <span className="text-white font-semibold">
               +7 (812) 345 25-25
@@ -87,7 +89,7 @@ export default function Page() {
 
       {/* Основной блок */}
       <main className="pt-40 px-6 container mx-auto">
-        {/* Поиск (скрывается при isSticky) */}
+        {/* Поиск в основном блоке */}
         {!isSticky && (
           <div className="w-full max-w-md mx-auto mb-8 transition-all duration-700">
             <input
