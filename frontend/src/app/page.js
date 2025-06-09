@@ -77,13 +77,13 @@ export default function Page() {
         </div>
 
         {/* Каталог товаров */}
-        <div className="w-full max-w-screen-xl overflow-x-auto">
-          <div className="flex space-x-4 py-4">
+        <div className="w-full max-w-screen-xl h-[500px] overflow-y-auto">
+          <div className="flex flex-col space-y-4 py-4">
             {/* Пример карточек товаров */}
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
               <div
                 key={item}
-                className="w-60 bg-white/70 rounded-lg shadow-md p-4 flex-shrink-0 backdrop-blur-md"
+                className="w-full bg-white/70 rounded-lg shadow-md p-4 backdrop-blur-md"
               >
                 <div className="h-40 bg-gray-300 rounded mb-2"></div>
                 <h3 className="text-lg font-semibold">Товар {item}</h3>
