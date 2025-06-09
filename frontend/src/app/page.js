@@ -1,10 +1,11 @@
-"use client"; // Добавляем эту строку первой
+"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function Page() {
   const [isSticky, setIsSticky] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,13 +73,17 @@ export default function Page() {
 
           {/* Поиск в хедере */}
           <div
-            className={`transition-all duration-500 ${
-              isSticky ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+            className={`transition-transform duration-500 ease-in-out ${
+              isSticky
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-full"
             }`}
           >
             <input
               type="text"
               placeholder="Поиск товаров"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
               className="bg-white/40 border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
@@ -99,6 +104,8 @@ export default function Page() {
             <input
               type="text"
               placeholder="Поиск товаров"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
               className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
