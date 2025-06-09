@@ -10,27 +10,54 @@ export default function Page() {
           alt="Фон баннера"
           layout="fill"
           objectFit="cover"
-          className="brightness-75" // затемним чуть больше для контраста
+          className="brightness-75"
         />
       </div>
 
       {/* Хедер */}
       <header className="bg-black/60 text-white shadow">
         <div className="container mx-auto flex justify-between items-center py-4 px-6">
-          <nav className="flex space-x-6">
-            <a
-              href="#"
-              className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg"
-            >
-              Каталог
-            </a>
+          {/* Левое меню */}
+          <nav className="flex space-x-6 items-center">
+            {/* Каталог с выпадающим меню */}
+            <div className="relative group">
+              <button className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg">
+                Каталог
+              </button>
+              <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+                  Электрический
+                </a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+                  Бензиновый
+                </a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+                  Ручной
+                </a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
+                  Аксессуары
+                </a>
+              </div>
+            </div>
+
+            {/* Услуги */}
             <a
               href="#"
               className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg"
             >
               Услуги
             </a>
+
+            {/* Корзина */}
+            <a
+              href="#"
+              className="px-6 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition-colors text-lg"
+            >
+              🛒 Корзина
+            </a>
           </nav>
+
+          {/* Номер телефона */}
           <div className="text-gray-200 font-medium">
             Номер для связи:{" "}
             <span className="text-white font-semibold">89435828578</span>
