@@ -1,18 +1,45 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Вынесем логику в отдельный компонент
 function AdminPageInner() {
-  const searchParams = useSearchParams();
-  const adminCode = searchParams.get("admin");
-  const adminSecret = process.env.NEXT_PUBLIC_ADMIN_SECRET;
+  const [authorized, setAuthorized] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  if (adminCode !== adminSecret) {
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const adminCode = searchParams.get("admin");
+
+    if (!adminCode) {
+      setLoading(false);
+      setAuthorized(false);
+      return;
+    }
+
+    fetch(`/api/verify-admin?admin=${adminCode}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAuthorized(data.access);
+        setLoading(false);
+      })
+      .catch(() => {
+        setAuthorized(false);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl font-bold">
+        Проверка доступа...
+      </div>
+    );
+  }
+
+  if (!authorized) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-bold">
         Доступ запрещён.
@@ -38,19 +65,19 @@ function AdminPageInner() {
         <div className="container mx-auto flex justify-center items-center py-4 px-6">
           <nav className="flex flex-wrap gap-3 items-center">
             <Link
-              href={`/admin/add-category?admin=${adminSecret}`}
+              href={`/admin/add-category?admin=${process.env.ADMIN_SECRET}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               🗂️ Управление категориями
             </Link>
             <Link
-              href={`/admin/add-product?admin=${adminSecret}`}
+              href={`/admin/add-product?admin=${process.env.ADMIN_SECRET}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               📦 Управление товарами
             </Link>
             <Link
-              href={`/admin/requests?admin=${adminSecret}`}
+              href={`/admin/requests?admin=${process.env.ADMIN_SECRET}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               📑 Прием заявок
