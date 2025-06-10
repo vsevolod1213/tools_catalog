@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function AdminPage() {
+function AdminPageInner() {
   const searchParams = useSearchParams();
   const [auth, setAuth] = useState(false);
 
@@ -25,8 +25,15 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen p-8">
       <h1 className="text-2xl font-bold mb-6">Админ-панель</h1>
-      {/* Здесь добавление категорий и товаров */}
       <p>Здесь будет форма для добавления категорий и товаров.</p>
     </div>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Загрузка админки...</div>}>
+      <AdminPageInner />
+    </Suspense>
   );
 }
