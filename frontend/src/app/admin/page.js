@@ -1,11 +1,13 @@
 "use client";
 export const dynamic = "force-dynamic";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function AdminPage() {
+// Вынесем логику в отдельный компонент
+function AdminPageInner() {
   const searchParams = useSearchParams();
   const adminCode = searchParams.get("admin");
   const adminSecret = process.env.NEXT_PUBLIC_ADMIN_SECRET;
@@ -17,9 +19,6 @@ export default function AdminPage() {
       </div>
     );
   }
-
- 
-
 
   return (
     <div className="relative min-h-screen font-sans">
@@ -72,5 +71,13 @@ export default function AdminPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Загрузка админки...</div>}>
+      <AdminPageInner />
+    </Suspense>
   );
 }
