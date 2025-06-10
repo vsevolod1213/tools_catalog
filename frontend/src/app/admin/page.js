@@ -1,7 +1,5 @@
 "use client";
-export const dynamic = "force-dynamic";
-
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -34,11 +32,7 @@ function AdminPageInner() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-xl font-bold">
-        Проверка доступа...
-      </div>
-    );
+    return <div className="p-8">Проверка доступа...</div>;
   }
 
   if (!authorized) {
@@ -51,7 +45,6 @@ function AdminPageInner() {
 
   return (
     <div className="relative min-h-screen font-sans">
-      {/* Фон */}
       <div className="absolute inset-0 -z-10">
         <Image
           src="/banner.png"
@@ -61,8 +54,6 @@ function AdminPageInner() {
           className="brightness-75"
         />
       </div>
-
-      {/* Хедер */}
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
         <div className="container mx-auto flex justify-center items-center py-4 px-6">
           <nav className="flex flex-wrap gap-3 items-center">
@@ -87,8 +78,6 @@ function AdminPageInner() {
           </nav>
         </div>
       </header>
-
-      {/* Основной блок */}
       <main className="pt-40 px-6 container mx-auto">
         <div className="bg-white/70 rounded-lg shadow-md p-6 backdrop-blur-md">
           <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">
