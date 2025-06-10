@@ -8,18 +8,20 @@ import Image from "next/image";
 function AdminPageInner() {
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [adminCode, setAdminCode] = useState("");
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const adminCode = searchParams.get("admin");
+    const code = searchParams.get("admin");
+    setAdminCode(code);
 
-    if (!adminCode) {
+    if (!code) {
       setLoading(false);
       setAuthorized(false);
       return;
     }
 
-    fetch(`/api/verify-admin?admin=${adminCode}`)
+    fetch(`/api/verify-admin?admin=${code}`)
       .then((res) => res.json())
       .then((data) => {
         setAuthorized(data.access);
@@ -65,19 +67,19 @@ function AdminPageInner() {
         <div className="container mx-auto flex justify-center items-center py-4 px-6">
           <nav className="flex flex-wrap gap-3 items-center">
             <Link
-              href={`/admin/add-category?admin=${process.env.ADMIN_SECRET}`}
+              href={`/admin/add-category?admin=${adminCode}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               🗂️ Управление категориями
             </Link>
             <Link
-              href={`/admin/add-product?admin=${process.env.ADMIN_SECRET}`}
+              href={`/admin/add-product?admin=${adminCode}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               📦 Управление товарами
             </Link>
             <Link
-              href={`/admin/requests?admin=${process.env.ADMIN_SECRET}`}
+              href={`/admin/requests?admin=${adminCode}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               📑 Прием заявок
