@@ -11,15 +11,17 @@ function AddProductPageInner() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("admin");
+    const categoryIdParam = searchParams.get("categoryId");
     setAdminCode(code);
+    setCategoryId(categoryIdParam);
 
-    if (!code) {
+    if (!code || !categoryIdParam) {
       setLoading(false);
       setAuthorized(false);
       return;
@@ -54,7 +56,7 @@ function AddProductPageInner() {
 
       if (res.ok) {
         alert("Товар успешно добавлен!");
-        window.location.href = `/admin/products?admin=${adminCode}`;
+        window.location.href = `/admin/store/categorie/${categoryId}?admin=${adminCode}`;
       } else {
         alert("Ошибка при добавлении товара.");
       }
@@ -68,21 +70,25 @@ function AddProductPageInner() {
 
   if (loading) return <div className="p-8">Проверка доступа...</div>;
 
-  if (!authorized) {
-    return <div className="min-h-screen flex items-center justify-center text-xl font-bold">Доступ запрещён.</div>;
+  if (!authorized || !categoryId) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl font-bold">
+        Доступ запрещён или не указан ID категории.
+      </div>
+    );
   }
 
   return (
     <div className="relative min-h-screen font-sans">
+      {/* Фон */}
       <div className="absolute inset-0 -z-10">
-        <Image src="/banner.png" alt="Фон баннера" layout="fill" objectFit="cover" className="brightness-75" />
+        <Image src="/banner.png" alt="Фон баннера" fill className="brightness-75" />
       </div>
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
         <div className="container mx-auto flex justify-center items-center py-4 px-6">
-          <nav className="flex flex-wrap gap-3 items-center">
-            <Link href={`/admin/categories?admin=${adminCode}`} className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">🗂️ Управление категориями</Link>
-            <Link href={`/admin/products?admin=${adminCode}`} className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">📦 Управление товарами</Link>
-            <Link href={`/admin/requests?admin=${adminCode}`} className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">📑 Прием заявок</Link>
+          <nav className="flex gap-3 items-center">
+            <Link href={`/admin/store?admin=${adminCode}`}>🛒 Управление магазином</Link>
+            <Link href={`/admin/requests?admin=${adminCode}`}>📑 Прием заявок</Link>
           </nav>
         </div>
       </header>
@@ -94,7 +100,6 @@ function AddProductPageInner() {
             <textarea placeholder="Описание" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 rounded border" />
             <input type="number" placeholder="Цена" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full px-3 py-2 rounded border" required />
             <input type="text" placeholder="Ссылка на изображение" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className="w-full px-3 py-2 rounded border" />
-            <input type="number" placeholder="ID категории" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="w-full px-3 py-2 rounded border" />
             <button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full shadow transition" disabled={saving}>
               {saving ? "Сохранение..." : "Создать товар"}
             </button>
@@ -106,5 +111,9 @@ function AddProductPageInner() {
 }
 
 export default function AddProductPage() {
-  return <Suspense fallback={<div className="p-8">Загрузка страницы...</div>}><AddProductPageInner /></Suspense>;
+  return (
+    <Suspense fallback={<div className="p-8">Загрузка страницы...</div>}>
+      <AddProductPageInner />
+    </Suspense>
+  );
 }
