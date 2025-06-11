@@ -58,7 +58,7 @@ function AdminPageInner() {
         <div className="container mx-auto flex justify-center items-center py-4 px-6">
           <nav className="flex flex-wrap gap-3 items-center">
             <Link
-              href={`/admin/add-category?admin=${adminCode}`}
+              href={`/admin/categories?admin=${adminCode}`}
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               🗂️ Управление категориями
