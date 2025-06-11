@@ -93,6 +93,13 @@ export default function StorePage() {
                     >
                       📦 Товары
                     </Link>
+                    <Link
+                        href={`/admin/edit-category/${cat.id}?admin=${adminCode}`}
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-full shadow"
+                        >
+                        ✏️ Редактировать
+                    </Link>
+
                     <button
                       onClick={() => handleDelete(cat.id)}
                       className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full shadow"

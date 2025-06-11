@@ -53,7 +53,7 @@ function AddCategoryPageInner() {
 
       if (res.ok) {
         alert("Категория успешно добавлена!");
-        window.location.href = `/admin/categories?admin=${adminCode}`;
+        window.location.href = `/admin/store?admin=${adminCode}`;
       } else {
         alert("Ошибка при добавлении категории.");
       }
