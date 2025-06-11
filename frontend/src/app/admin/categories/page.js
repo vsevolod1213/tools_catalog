@@ -60,6 +60,7 @@ export default function CategoriesAdminPage() {
                 🗑️ Удалить
               </button>
             </div>
+            
           </li>
         ))}
       </ul>
