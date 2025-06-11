@@ -6,6 +6,9 @@ import Image from "next/image";
 export default function Page() {
   const [isSticky, setIsSticky] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +17,38 @@ export default function Page() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    // Загружаем категории
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data.categories);
+      })
+      .catch((err) => console.error("Ошибка загрузки категорий:", err));
+
+    // Загружаем товары
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.products);
+        setFilteredProducts(data.products);
+      })
+      .catch((err) => console.error("Ошибка загрузки товаров:", err));
+  }, []);
+
+  // Фильтрация по поиску
+  useEffect(() => {
+    if (!searchValue.trim()) {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(
+        products.filter((product) =>
+          product.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    }
+  }, [searchValue, products]);
 
   return (
     <div className="relative min-h-screen font-sans">
@@ -38,24 +73,31 @@ export default function Page() {
                 Каталог
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                  Электрический
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                  Бензиновый
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                  Ручной
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-200">
-                  Аксессуары
-                </a>
+                {categories.length > 0 ? (
+                  categories.map((cat) => (
+                    <a
+                      key={cat.id}
+                      href={`#category-${cat.id}`}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                    >
+                      {cat.name}
+                    </a>
+                  ))
+                ) : (
+                  <p className="px-4 py-2 text-gray-500">Нет категорий</p>
+                )}
               </div>
             </div>
-            <a href="#" className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+            <a
+              href="#"
+              className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
               Услуги
             </a>
-            <a href="#" className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+            <a
+              href="#"
+              className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
               🛒 Корзина
             </a>
           </nav>
@@ -63,9 +105,7 @@ export default function Page() {
           {/* Поиск в хедере */}
           <div
             className={`transition-all duration-100 ease-in-out transform ${
-              isSticky
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+              isSticky ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             } absolute left-1/2 -translate-x-1/2 top-full mt-[-65px] w-full max-w-md`}
           >
             <input
@@ -103,21 +143,32 @@ export default function Page() {
         )}
 
         {/* Каталог */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {[...Array(20).keys()].map((item) => (
-            <div
-              key={item}
-              className="bg-white/70 rounded-lg shadow-md p-4 backdrop-blur-md"
-            >
-              <div className="h-40 bg-gray-300 rounded mb-2"></div>
-              <h3 className="text-lg font-semibold">Товар {item + 1}</h3>
-              <p className="text-sm text-gray-700">Описание товара</p>
-              <button className="mt-2 px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition">
-                Подробнее
-              </button>
+        {categories.map((cat) => (
+          <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+              {cat.name}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {filteredProducts
+                .filter((p) => p.category_id === cat.id)
+                .map((product) => (
+                  <div
+                    key={product.id}
+                    className="bg-white/70 rounded-lg shadow-md p-4 backdrop-blur-md"
+                  >
+                    <div className="h-40 bg-gray-300 rounded mb-2"></div>
+                    <h3 className="text-lg font-semibold">{product.name}</h3>
+                    <p className="text-sm text-gray-700">
+                      {product.description}
+                    </p>
+                    <button className="mt-2 px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition">
+                      Подробнее
+                    </button>
+                  </div>
+                ))}
             </div>
-          ))}
-        </div>
+          </section>
+        ))}
       </main>
     </div>
   );
