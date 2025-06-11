@@ -1,19 +1,46 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
-export default function CategoriesAdminPage() {
-  const [categories, setCategories] = useState([]);
+function CategoriesPageInner() {
+  const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [adminCode, setAdminCode] = useState("");
 
   useEffect(() => {
-    fetch("/api/categories")
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("admin");
+    setAdminCode(code);
+
+    if (!code) {
+      setLoading(false);
+      setAuthorized(false);
+      return;
+    }
+
+    fetch(`/api/verify-admin?admin=${code}`)
       .then((res) => res.json())
       .then((data) => {
-        setCategories(data.categories);
-        setLoading(false);
+        if (data.access) {
+          setAuthorized(true);
+          fetch("/api/categories")
+            .then((res) => res.json())
+            .then((data) => {
+              setCategories(data.categories);
+              setLoading(false);
+            })
+            .catch(() => {
+              setLoading(false);
+            });
+        } else {
+          setAuthorized(false);
+          setLoading(false);
+        }
       })
       .catch(() => {
+        setAuthorized(false);
         setLoading(false);
       });
   }, []);
@@ -31,39 +58,109 @@ export default function CategoriesAdminPage() {
     }
   };
 
-  if (loading) return <div>Загрузка...</div>;
+  if (loading) {
+    return <div className="p-8">Проверка доступа...</div>;
+  }
+
+  if (!authorized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl font-bold">
+        Доступ запрещён.
+      </div>
+    );
+  }
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Управление категориями</h1>
-      <Link
-        href="/admin/add-category"
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block"
-      >
-        ➕ Добавить категорию
-      </Link>
-      <ul className="mt-4">
-        {categories.map((cat) => (
-          <li key={cat.id} className="border-b py-2 flex justify-between">
-            <span>{cat.name}</span>
-            <div className="flex gap-2">
-              <Link
-                href={`/admin/edit-category/${cat.id}`}
-                className="bg-blue-500 text-white px-2 py-1 rounded"
-              >
-                ✏️ Редактировать
-              </Link>
-              <button
-                onClick={() => handleDelete(cat.id)}
-                className="bg-red-500 text-white px-2 py-1 rounded"
-              >
-                🗑️ Удалить
-              </button>
-            </div>
-            
-          </li>
-        ))}
-      </ul>
+    <div className="relative min-h-screen font-sans">
+      {/* Фон */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/banner.png"
+          alt="Фон баннера"
+          layout="fill"
+          objectFit="cover"
+          className="brightness-75"
+        />
+      </div>
+
+      {/* Хедер */}
+      <header className="bg-black/60 text-white shadow fixed w-full z-20">
+        <div className="container mx-auto flex justify-center items-center py-4 px-6">
+          <nav className="flex flex-wrap gap-3 items-center">
+            <Link
+              href={`/admin/categories?admin=${adminCode}`}
+              className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
+              🗂️ Управление категориями
+            </Link>
+            <Link
+              href={`/admin/add-product?admin=${adminCode}`}
+              className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
+              📦 Управление товарами
+            </Link>
+            <Link
+              href={`/admin/requests?admin=${adminCode}`}
+              className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
+              📑 Прием заявок
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      {/* Основной блок */}
+      <main className="pt-40 px-6 container mx-auto">
+        <div className="bg-white/70 rounded-lg shadow-md p-6 backdrop-blur-md">
+          <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">
+            Управление категориями
+          </h1>
+          <div className="text-center mb-4">
+            <Link
+              href={`/admin/add-category?admin=${adminCode}`}
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full shadow transition"
+            >
+              ➕ Добавить категорию
+            </Link>
+          </div>
+          {categories.length === 0 ? (
+            <p className="text-center text-gray-700">Категории не найдены.</p>
+          ) : (
+            <ul className="mt-4">
+              {categories.map((cat) => (
+                <li
+                  key={cat.id}
+                  className="border-b py-2 flex justify-between items-center"
+                >
+                  <span className="font-medium text-gray-800">{cat.name}</span>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/admin/edit-category/${cat.id}?admin=${adminCode}`}
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-full shadow"
+                    >
+                      ✏️ Редактировать
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(cat.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full shadow"
+                    >
+                      🗑️ Удалить
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </main>
     </div>
+  );
+}
+
+export default function CategoriesPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Загрузка категорий...</div>}>
+      <CategoriesPageInner />
+    </Suspense>
   );
 }
