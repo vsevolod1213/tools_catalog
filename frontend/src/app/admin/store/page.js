@@ -88,7 +88,7 @@ export default function StorePage() {
                   <span className="font-medium text-gray-800">{cat.name}</span>
                   <div className="flex gap-2">
                     <Link
-                      href={`/admin/store/categorie/${cat.id}?admin=${adminCode}`}
+                      href={`/admin/store/category/${cat.id}?admin=${adminCode}`}
                       className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-full shadow"
                     >
                       📦 Товары
