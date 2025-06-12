@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import { createClient } from '@supabase/supabase-js'
 function AddProductPageInner() {
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -41,29 +41,36 @@ function AddProductPageInner() {
   }, []);
 
   // Обработчик загрузки изображения
+  
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const fileName = `${Date.now()}-${file.name}`;
 
-    try {
-      const res = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (res.ok && data.url) {
-        setImageUrl(data.url);
-      } else {
-        alert("Ошибка при загрузке изображения.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Ошибка при загрузке изображения.");
+    const { data, error } = await supabase.storage
+      .from('images')
+      .upload(fileName, file);
+
+    if (error) {
+      console.error('Ошибка при загрузке:', error.message);
+      alert('Ошибка при загрузке изображения.');
+      return;
     }
+
+    const { data: publicUrlData } = supabase.storage
+      .from('images')
+      .getPublicUrl(fileName);
+
+    setImageUrl(publicUrlData.publicUrl); // сохраняешь в state
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
