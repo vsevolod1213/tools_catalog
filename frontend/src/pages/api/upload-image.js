@@ -26,10 +26,14 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Ошибка парсинга формы' });
     }
 
+    console.log('[FIELDS]', fields);
+    console.log('[FILES]', files);
+
     const fileInput = files.file;
     const file = Array.isArray(fileInput) ? fileInput[0] : fileInput;
 
     if (!file || !file.filepath) {
+      console.error('[Missing file or filepath]', file);
       return res.status(400).json({ error: 'Файл не получен или filepath отсутствует' });
     }
 
