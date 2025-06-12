@@ -43,42 +43,30 @@ function AddProductPageInner() {
   // Обработчик загрузки изображения
   
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.error('[formidable error]', err);
-      return res.status(500).json({ error: 'Ошибка парсинга формы' });
-    }
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    const file = files.file; // <--- исправлено
-
-    if (!file) {
-      return res.status(400).json({ error: 'Файл не получен' });
-    }
+    const formData = new FormData();
+    formData.append("file", file); // <--- ключ должен быть "file" (именно так!)
 
     try {
-      const buffer = await fs.readFile(file.filepath);
-      const fileName = `${Date.now()}-${file.originalFilename}`;
+      const res = await fetch("/api/upload-image", {
+        method: "POST",
+        body: formData,
+      });
 
-      const { error } = await supabase.storage
-        .from('images')
-        .upload(fileName, buffer, {
-          contentType: file.mimetype,
-        });
-
-      if (error) {
-        console.error('[Supabase upload error]', error);
-        return res.status(500).json({ error: error.message });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        setImageUrl(data.url);
+      } else {
+        alert("Ошибка при загрузке изображения.");
       }
-
-      const { data } = supabase.storage.from('images').getPublicUrl(fileName);
-      return res.status(200).json({ url: data.publicUrl });
-
-    } catch (e) {
-      console.error('[File read error]', e);
-      return res.status(500).json({ error: 'Ошибка чтения файла: ' + e.message });
+    } catch (err) {
+      console.error(err);
+      alert("Ошибка при загрузке изображения.");
     }
-  });
-
+  };
 
 
 
