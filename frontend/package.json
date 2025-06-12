@@ -13,7 +13,8 @@
     "react-dom": "^19.0.0",
     "next": "15.3.3",
     "@supabase/supabase-js": "^2.39.5",
-    "formidable": "^2.0.0"
+    "formidable": "1.2.2"
+
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

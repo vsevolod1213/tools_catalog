@@ -52,7 +52,6 @@ function AddProductPageInner() {
       const res = await fetch("/api/upload-image", {
         method: "POST",
         body: formData,
-        duplex: "half",
       });
       const data = await res.json();
       if (res.ok && data.url) {
