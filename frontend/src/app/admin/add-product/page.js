@@ -47,21 +47,29 @@ function AddProductPageInner() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = await file.arrayBuffer();
+    const formData = new FormData();
+    formData.append("file", file);
 
-    const res = await fetch('/api/upload-image', {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const res = await fetch("/api/upload-image", {
+        method: "POST",
+        body: formData,
+        // ❌ НЕ указывай Content-Type вручную — иначе boundary не добавится
+        // headers: { "Content-Type": "multipart/form-data" } <-- не надо
+      });
 
-    const result = await res.json();
-    if (result.url) {
-      setImageUrl(result.url);
-    } else {
-      alert('Ошибка загрузки изображения');
-      console.error(result);
+      const data = await res.json();
+      if (res.ok && data.url) {
+        setImageUrl(data.url);
+      } else {
+        alert("Ошибка при загрузке изображения.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Ошибка при загрузке изображения.");
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
