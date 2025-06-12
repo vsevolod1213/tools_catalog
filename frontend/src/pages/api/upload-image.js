@@ -17,7 +17,7 @@ const supabase = createClient(
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 
-  const form = new formidable.IncomingForm({ keepExtensions: true });
+  const form = new formidable.IncomingForm({ keepExtensions: true, multiples: false });
 
   form.parse(req, async (err, fields, files) => {
     if (err) return res.status(500).json({ error: 'Parse error' });
@@ -25,8 +25,10 @@ export default async function handler(req, res) {
     const file = files.file;
     if (!file) return res.status(400).json({ error: 'No file uploaded' });
 
-    const filePath = file.filepath;
+    const filePath = file.filepath || file.path;
     const fileName = `${Date.now()}-${file.originalFilename}`;
+
+    console.log('Uploading:', fileName);
 
     const { error } = await supabase.storage
       .from('images')
