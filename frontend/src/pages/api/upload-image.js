@@ -5,6 +5,7 @@ import fs from 'fs';
 export const config = {
   api: {
     bodyParser: false,
+    externalResolver: true,
   },
 };
 
@@ -27,11 +28,10 @@ export default async function handler(req, res) {
     const filePath = file.filepath;
     const fileName = `${Date.now()}-${file.originalFilename}`;
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('images')
       .upload(fileName, fs.createReadStream(filePath), {
         contentType: file.mimetype,
-        upsert: false,
       });
 
     if (error) return res.status(500).json({ error: error.message });
