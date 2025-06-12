@@ -19,10 +19,10 @@ export default async function handler(req, res) {
   const form = new formidable.IncomingForm({ keepExtensions: true });
 
   form.parse(req, async (err, fields, files) => {
-    if (err) return res.status(500).json({ error: 'Ошибка парсинга файла' });
+    if (err) return res.status(500).json({ error: 'Parse error' });
 
     const file = files.file;
-    if (!file) return res.status(400).json({ error: 'Файл не выбран' });
+    if (!file) return res.status(400).json({ error: 'No file uploaded' });
 
     const filePath = file.filepath;
     const fileName = `${Date.now()}-${file.originalFilename}`;
@@ -36,14 +36,7 @@ export default async function handler(req, res) {
 
     if (error) return res.status(500).json({ error: error.message });
 
-    // Формируем публичный URL. Обычно Supabase предоставляет функцию getPublicUrl,
-    // но можно и сформировать вручную:
-    const { publicURL, error: urlError } = supabase.storage
-      .from('images')
-      .getPublicUrl(fileName);
-
-    if (urlError) return res.status(500).json({ error: urlError.message });
-
-    return res.status(200).json({ url: publicURL });
+    const publicUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
+    return res.status(200).json({ url: publicUrl });
   });
 }
