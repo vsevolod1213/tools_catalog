@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import formidable from 'formidable';
-import fs from 'fs';
+import fs from 'fs/promises'; // здесь важно promises
 
 export const config = {
   api: {
@@ -21,21 +21,25 @@ export default async function handler(req, res) {
   form.parse(req, async (err, fields, files) => {
     if (err) return res.status(500).json({ error: 'Ошибка парсинга формы' });
 
-    const file = files.file;
+    const file = files.file?.[0];
     if (!file) return res.status(400).json({ error: 'Файл не получен' });
 
-    const filePath = file[0].filepath;
-    const fileName = `${Date.now()}-${file[0].originalFilename}`;
+    try {
+      const buffer = await fs.readFile(file.filepath);
+      const fileName = `${Date.now()}-${file.originalFilename}`;
 
-    const { error } = await supabase.storage
-      .from('images')
-      .upload(fileName, fs.createReadStream(filePath), {
-        contentType: file[0].mimetype,
-      });
+      const { error } = await supabase.storage
+        .from('images')
+        .upload(fileName, buffer, {
+          contentType: file.mimetype,
+        });
 
-    if (error) return res.status(500).json({ error: error.message });
+      if (error) return res.status(500).json({ error: error.message });
 
-    const { data } = supabase.storage.from('images').getPublicUrl(fileName);
-    return res.status(200).json({ url: data.publicUrl });
+      const { data } = supabase.storage.from('images').getPublicUrl(fileName);
+      return res.status(200).json({ url: data.publicUrl });
+    } catch (readErr) {
+      return res.status(500).json({ error: 'Ошибка чтения файла: ' + readErr.message });
+    }
   });
 }
