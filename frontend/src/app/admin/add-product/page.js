@@ -204,4 +204,5 @@ export default function AddProductPage() {
       <AddProductPageInner />
     </Suspense>
   );
+  
 }
