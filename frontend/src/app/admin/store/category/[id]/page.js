@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 
 export default function ProductsInCategoryPage() {
-  const [products, setProducts] = useState([]);
+  const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [adminCode, setAdminCode] = useState("");
   const params = useParams();
@@ -17,22 +18,39 @@ export default function ProductsInCategoryPage() {
     const code = searchParams.get("admin");
     setAdminCode(code);
 
-    fetch(`/api/categories`)
+    if (!code) {
+      setAuthorized(false);
+      setLoading(false);
+      return;
+    }
+
+    fetch(`/api/verify-admin?admin=${code}`)
       .then((res) => res.json())
       .then((data) => {
-        const category = data.categories.find((c) => c.id === parseInt(id));
+        if (data.access) {
+          setAuthorized(true);
+          return fetch("/api/categories");
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        const category = data.categories.find((c) => c.id.toString() === id);
         if (category) {
           setCategoryName(category.name);
         }
-      });
-
-    fetch(`/api/products?categoryId=${id}`)
+        return fetch(`/api/products?categoryId=${id}`);
+      })
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.products);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setAuthorized(false);
+        setLoading(false);
+      });
   }, [id]);
 
   const handleDelete = async (productId) => {
@@ -46,7 +64,8 @@ export default function ProductsInCategoryPage() {
     }
   };
 
-  if (loading) return <div className="p-8">Загрузка товаров...</div>;
+  if (loading) return <div className="p-8">Загрузка...</div>;
+  if (!authorized) return <div className="p-8 text-xl font-bold">Доступ запрещён</div>;
 
   return (
     <div className="relative min-h-screen font-sans">

@@ -4,22 +4,41 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function StorePage() {
-  const [categories, setCategories] = useState([]);
+  const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
   const [adminCode, setAdminCode] = useState("");
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("admin");
     setAdminCode(code);
 
-    fetch("/api/categories")
+    if (!code) {
+      setAuthorized(false);
+      setLoading(false);
+      return;
+    }
+
+    fetch(`/api/verify-admin?admin=${code}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.access) {
+          setAuthorized(true);
+          return fetch("/api/categories");
+        } else {
+          throw new Error("Unauthorized");
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setCategories(data.categories);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setAuthorized(false);
+        setLoading(false);
+      });
   }, []);
 
   const handleDelete = async (id) => {
@@ -33,7 +52,9 @@ export default function StorePage() {
     }
   };
 
-  if (loading) return <div className="p-8">Загрузка категорий...</div>;
+  if (loading) return <div className="p-8">Загрузка...</div>;
+  if (!authorized) return <div className="p-8 text-xl font-bold">Доступ запрещён</div>;
+
 
   return (
     <div className="relative min-h-screen font-sans">

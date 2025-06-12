@@ -56,7 +56,7 @@ function AddProductPageInner() {
 
       if (res.ok) {
         alert("Товар успешно добавлен!");
-        window.location.href = `/admin/store/categorie/${categoryId}?admin=${adminCode}`;
+        window.location.href = `/admin/store/category/${categoryId}?admin=${adminCode}`;
       } else {
         alert("Ошибка при добавлении товара.");
       }
