@@ -1,51 +1,29 @@
 import { createClient } from '@supabase/supabase-js';
-import formidable from 'formidable';
-import fs from 'fs';
-
-export const config = {
-  api: {
-    bodyParser: false,
-    externalResolver: true,
-  },
-};
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end('Method not allowed');
+const handleImageUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-  const form = new formidable.IncomingForm({
-    keepExtensions: true,
-    uploadDir: '/tmp', // важно!
-  });
+  const fileName = `${Date.now()}-${file.name}`;
+  const { data, error } = await supabase.storage
+    .from('images')
+    .upload(fileName, file);
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.error('Formidable error:', err);
-      return res.status(500).json({ error: 'Parse error' });
-    }
+  if (error) {
+    console.error('Ошибка загрузки:', error.message);
+    alert("Ошибка при загрузке изображения.");
+    return;
+  }
 
-    const file = files.file;
-    if (!file) return res.status(400).json({ error: 'No file uploaded' });
+  const { data: publicUrlData } = supabase
+    .storage
+    .from('images')
+    .getPublicUrl(fileName);
 
-    const filePath = file.path;
-    const fileName = `${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('images')
-      .upload(fileName, fs.createReadStream(filePath), {
-        contentType: file.type,
-      });
-
-    if (error) {
-      console.error('Supabase error:', error);
-      return res.status(500).json({ error: error.message });
-    }
-
-    const publicUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
-    return res.status(200).json({ url: publicUrl });
-  });
-}
+  setImageUrl(publicUrlData.publicUrl);
+};
