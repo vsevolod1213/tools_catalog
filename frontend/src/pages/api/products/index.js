@@ -7,7 +7,16 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const { data, error } = await supabase.from('products').select('*');
+    const { categoryId } = req.query;
+
+    let query = supabase.from('products').select('*');
+
+    if (categoryId) {
+      query = query.eq('category_id', categoryId);
+    }
+
+    const { data, error } = await query;
+
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json({ products: data });
   }
@@ -18,6 +27,7 @@ export default async function handler(req, res) {
       .from('products')
       .insert([{ name, description, price, image_url, category_id }])
       .select();
+
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json({ product: data[0] });
   }
