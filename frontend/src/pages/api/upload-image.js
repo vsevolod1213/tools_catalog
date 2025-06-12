@@ -21,7 +21,8 @@ export default async function handler(req, res) {
   form.parse(req, async (err, fields, files) => {
     if (err) return res.status(500).json({ error: 'Ошибка парсинга формы' });
 
-    const file = files.file?.[0];
+    const file = files.file; 
+
     if (!file) return res.status(400).json({ error: 'Файл не получен' });
 
     try {
