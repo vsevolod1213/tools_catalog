@@ -14,6 +14,7 @@ function AddProductPageInner() {
   const [categoryId, setCategoryId] = useState(null);
   const [saving, setSaving] = useState(false);
 
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("admin");
@@ -39,7 +40,28 @@ function AddProductPageInner() {
       });
   }, []);
 
-  const handleSubmit = async (e) => {
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload-image", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (res.ok && data.url) {
+      setImageUrl(data.url);
+    } else {
+      alert("Ошибка при загрузке изображения.");
+    }
+  };
+
+  const handleSubmit =  async (e) => {
     e.preventDefault();
     if (!name.trim()) {
       alert("Название товара не может быть пустым.");
@@ -99,11 +121,24 @@ function AddProductPageInner() {
             <input type="text" placeholder="Название товара" value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded border" required />
             <textarea placeholder="Описание" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full px-3 py-2 rounded border" />
             <input type="number" placeholder="Цена" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full px-3 py-2 rounded border" required />
-            <input type="text" placeholder="Ссылка на изображение" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className="w-full px-3 py-2 rounded border" />
+            
+            <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-3 py-2 rounded border bg-white" />
+            
+            {imageUrl && (
+              <Image
+                src={imageUrl}
+                alt="Превью"
+                width={100}
+                height={100}
+                className="rounded border"
+              />
+            )}
+
             <button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full shadow transition" disabled={saving}>
               {saving ? "Сохранение..." : "Создать товар"}
             </button>
           </form>
+
         </div>
       </main>
     </div>

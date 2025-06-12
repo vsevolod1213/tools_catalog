@@ -152,19 +152,31 @@ export default function Page() {
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div
-                    key={product.id}
-                    className="bg-white/70 rounded-lg shadow-md p-4 backdrop-blur-md"
-                  >
-                    <div className="h-40 bg-gray-300 rounded mb-2"></div>
-                    <h3 className="text-lg font-semibold">{product.name}</h3>
-                    <p className="text-sm text-gray-700">
-                      {product.description}
-                    </p>
-                    <button className="mt-2 px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition">
-                      Подробнее
-                    </button>
+                  <div key={product.id} className="bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex justify-between items-start">
+                    {/* Изображение */}
+                    <div className="w-28 h-28 rounded bg-gray-300 overflow-hidden mr-4 flex-shrink-0">
+                      {product.image_url ? (
+                        <Image src={product.image_url} alt={product.name} width={112} height={112} className="object-cover w-full h-full" />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200" />
+                      )}
+                    </div>
+
+                    {/* Описание */}
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold">{product.name}</h3>
+                      <p className="text-sm text-gray-700">{product.description}</p>
+                      <button className="mt-2 px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition">
+                        Подробнее
+                      </button>
+                    </div>
+
+                    {/* Цена */}
+                    <div className="text-right font-bold text-xl text-green-700 whitespace-nowrap ml-4">
+                      {product.price} ₽
+                    </div>
                   </div>
+
                 ))}
             </div>
           </section>
