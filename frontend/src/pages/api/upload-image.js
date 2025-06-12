@@ -27,8 +27,8 @@ export default async function handler(req, res) {
     }
 
     const file = files.file;
-    if (!file) {
-      return res.status(400).json({ error: 'Файл не получен' });
+    if (!file || !file.filepath) {
+      return res.status(400).json({ error: 'Файл не получен или filepath отсутствует' });
     }
 
     try {
@@ -46,10 +46,7 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: error.message });
       }
 
-      const { data } = supabase.storage
-        .from('images')
-        .getPublicUrl(fileName);
-
+      const { data } = supabase.storage.from('images').getPublicUrl(fileName);
       return res.status(200).json({ url: data.publicUrl });
     } catch (e) {
       console.error('[File read error]', e);
