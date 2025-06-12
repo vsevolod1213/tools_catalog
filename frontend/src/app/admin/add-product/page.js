@@ -48,14 +48,12 @@ function AddProductPageInner() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file); // <--- ключ должен быть "file" (именно так!)
 
     try {
       const res = await fetch("/api/upload-image", {
         method: "POST",
         body: formData,
-        // ❌ НЕ указывай Content-Type вручную — иначе boundary не добавится
-        // headers: { "Content-Type": "multipart/form-data" } <-- не надо
       });
 
       const data = await res.json();
@@ -69,6 +67,7 @@ function AddProductPageInner() {
       alert("Ошибка при загрузке изображения.");
     }
   };
+
 
 
   const handleSubmit = async (e) => {
