@@ -106,15 +106,16 @@ export default function Page() {
                 : "relative mt-8 mx-auto w-full px-4"
             }`}
           >
-            <input
+           <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               className={`bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full transition-all duration-300 ${
-                isSticky ? "max-w-2xl" : "max-w-md mx-auto"
+                isSticky ? "max-w-md mx-auto" : "max-w-2xl"
               }`}
             />
+
           </div>
 
 
