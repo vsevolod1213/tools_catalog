@@ -102,8 +102,8 @@ export default function Page() {
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
               !isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[200px] px-2" // шапка — короткая
-                : "relative mt-8 flex justify-center w-full px-4" // main — центрируем
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2" // шапка — короткая
+                : "relative mt-8 flex justify-center w-full px-0.5" // main — центрируем
             }`}
           >
             <input
@@ -112,8 +112,8 @@ export default function Page() {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
-                isSticky ? "py-2 text-sm max-w-md mx-auto" : "py-4 text-base max-w-md mx-auto"
-              }`}
+              isSticky ? "py-2 text-sm max-w-md mx-auto" : "py-4 text-base max-w-md mx-auto"
+            }`}
 
             />
           </div>
