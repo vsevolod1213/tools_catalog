@@ -135,9 +135,9 @@ export default function Page() {
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div key={product.id} className="relative h-full group">
-                    <div className="relative z-0 group-hover:z-10 group-hover:scale-105 group-hover:shadow-2xl transition-transform duration-300 ease-in-out">
-                      <div className="absolute inset-0 rounded-lg transform scale-100 group-hover:scale-105 transition-transform duration-300 bg-white/90 p-4 backdrop-blur-md shadow-md flex flex-col justify-between pointer-events-auto">
+                  <div key={product.id} className="relative h-full">
+                    <div className="relative group h-full">
+                      <div className="relative transition-transform duration-300 group-hover:scale-105 group-hover:z-50 group-hover:shadow-2xl bg-white/90 rounded-lg p-4 backdrop-blur-md flex flex-col justify-between">
                         <div>
                           <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
                             {product.image_url ? (
@@ -152,17 +152,11 @@ export default function Page() {
                               <div className="w-full h-full bg-gray-200" />
                             )}
                           </div>
-                          <h3 className="text-lg font-semibold">
-                            {product.name}
-                          </h3>
-                          <p className="text-sm text-gray-700 min-h-[48px]">
-                            {product.description}
-                          </p>
+                          <h3 className="text-lg font-semibold">{product.name}</h3>
+                          <p className="text-sm text-gray-700 min-h-[48px]">{product.description}</p>
                         </div>
                         <div className="mt-2 flex justify-between items-center">
-                          <div className="font-bold text-xl text-green-700">
-                            {product.price} ₽
-                          </div>
+                          <div className="font-bold text-xl text-green-700">{product.price} ₽</div>
                           <button
                             onClick={() => addToCart(product)}
                             className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
@@ -173,6 +167,7 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
+
                 ))}
             </div>
           </section>
