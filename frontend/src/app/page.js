@@ -101,7 +101,7 @@ export default function Page() {
 
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
-              !isSticky
+              isSticky
                 ? "relative mt-8 flex justify-center w-full"
                 : "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md px-6"
             }`}
@@ -154,8 +154,7 @@ export default function Page() {
                             )}
                           </div>
                           <h3 className="text-lg font-semibold">{product.name}</h3>
-                          <p className="text-sm text-gray-700 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-32 transition-all duration-300 overflow-hidden">{product.description}</p>
-
+                          <p className="text-sm text-gray-700 min-h-[48px]">{product.description}</p>
                         </div>
                         <div className="mt-2 flex justify-between items-center">
                           <div className="font-bold text-xl text-green-700">{product.price} ₽</div>
