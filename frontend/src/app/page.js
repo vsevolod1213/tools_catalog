@@ -9,6 +9,7 @@ export default function Page() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,15 +20,11 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    // Загружаем категории
     fetch("/api/categories")
       .then((res) => res.json())
-      .then((data) => {
-        setCategories(data.categories);
-      })
+      .then((data) => setCategories(data.categories))
       .catch((err) => console.error("Ошибка загрузки категорий:", err));
 
-    // Загружаем товары
     fetch("/api/products")
       .then((res) => res.json())
       .then((data) => {
@@ -37,7 +34,6 @@ export default function Page() {
       .catch((err) => console.error("Ошибка загрузки товаров:", err));
   }, []);
 
-  // Фильтрация по поиску
   useEffect(() => {
     if (!searchValue.trim()) {
       setFilteredProducts(products);
@@ -50,9 +46,12 @@ export default function Page() {
     }
   }, [searchValue, products]);
 
+  const addToCart = (product) => {
+    setCart((prev) => [...prev, product]);
+  };
+
   return (
     <div className="relative min-h-screen font-sans">
-      {/* Фон */}
       <div className="absolute inset-0 -z-10">
         <Image
           src="/banner.png"
@@ -63,10 +62,8 @@ export default function Page() {
         />
       </div>
 
-      {/* Хедер */}
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
         <div className="container mx-auto flex flex-wrap justify-between items-center py-4 px-6">
-          {/* Левое меню */}
           <nav className="flex flex-wrap gap-3 items-center">
             <div className="relative group">
               <button className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
@@ -98,11 +95,10 @@ export default function Page() {
               href="#"
               className="px-6 py-3 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
-              🛒 Корзина
+              🛒 Корзина ({cart.length})
             </a>
           </nav>
 
-          {/* Поиск в хедере */}
           <div
             className={`transition-all duration-100 ease-in-out transform ${
               isSticky ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -116,20 +112,13 @@ export default function Page() {
               className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
-
-          {/* Телефон */}
-          <div className="text-gray-200 font-medium hidden sm:block ml-auto">
-            Номер для связи:{" "}
-            <span className="text-white font-semibold">
-              +7 (812) 345 25-25
-            </span>
+<div className="text-gray-200 font-medium hidden sm:block ml-auto">
+            Номер для связи: <span className="text-white font-semibold">+7 (812) 345 25-25</span>
           </div>
         </div>
       </header>
 
-      {/* Основной блок */}
       <main className="pt-40 px-6 container mx-auto">
-        {/* Поиск в основном блоке */}
         {!isSticky && (
           <div className="w-full max-w-md mx-auto mb-8 transition-all duration-700">
             <input
@@ -142,41 +131,44 @@ export default function Page() {
           </div>
         )}
 
-        {/* Каталог */}
         {categories.map((cat) => (
           <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">
-              {cat.name}
-            </h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">{cat.name}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div key={product.id} className="bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex justify-between items-start">
-                    {/* Изображение */}
-                    <div className="w-28 h-28 rounded bg-gray-300 overflow-hidden mr-4 flex-shrink-0">
+                  <div
+                    key={product.id}
+                    className="group transition-transform hover:scale-[1.02] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col"
+                  >
+                    <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4 flex-shrink-0">
                       {product.image_url ? (
-                        <Image src={product.image_url} alt={product.name} width={112} height={112} className="object-cover w-full h-full" />
+                        <Image
+                          src={product.image_url}
+                          alt={product.name}
+                          width={300}
+                          height={160}
+                          className="object-cover w-full h-full"
+                        />
                       ) : (
                         <div className="w-full h-full bg-gray-200" />
                       )}
                     </div>
-
-                    {/* Описание */}
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold">{product.name}</h3>
-                      <p className="text-sm text-gray-700">{product.description}</p>
-                      <button className="mt-2 px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition">
-                        Подробнее
+                    <h3 className="text-lg font-semibold">{product.name}</h3>
+                    <p className="text-sm text-gray-700 group-hover:block hidden">{product.description}</p>
+                    <div className="mt-2 flex justify-between items-center">
+                      <div className="font-bold text-xl text-green-700">
+                        {product.price} ₽
+                      </div>
+                      <button
+                        onClick={() => addToCart(product)}
+                        className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
+                      >
+                        В корзину
                       </button>
                     </div>
-
-                    {/* Цена */}
-                    <div className="text-right font-bold text-xl text-green-700 whitespace-nowrap ml-4">
-                      {product.price} ₽
-                    </div>
                   </div>
-
                 ))}
             </div>
           </section>
