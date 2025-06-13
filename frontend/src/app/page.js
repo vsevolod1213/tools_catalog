@@ -113,9 +113,10 @@ export default function Page() {
               onChange={(e) => setSearchValue(e.target.value)}
               className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
                 isSticky
-                  ? "py-4 text-base max-w-2xl mx-auto"   // Main (длинная строка, центр)
-                  : "py-2 text-sm max-w-[320px] mx-auto" // Шапка (короткая строка, центр)
+                  ? "py-2 text-sm max-w-[320px] mx-auto" // Шапка (короткая строка, центр)
+                  : "py-4 text-base max-w-2xl mx-auto"   // Main (длинная строка, центр)
               }`}
+
             />
           </div>
 
