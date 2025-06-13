@@ -111,11 +111,10 @@ export default function Page() {
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 ${
-                isSticky
-                  ? "py-4 w-full max-w-2xl text-base" // main — шире и выше
-                  : "py-2 w-full max-w-[320px] text-sm" // шапка — компактная
+              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
+                isSticky ? "py-2 text-sm max-w-md mx-auto" : "py-4 text-base max-w-md mx-auto"
               }`}
+
             />
           </div>
 
