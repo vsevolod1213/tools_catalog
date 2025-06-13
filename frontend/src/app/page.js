@@ -99,7 +99,6 @@ export default function Page() {
             </a>
           </nav>
 
-          {/* Поиск */}
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
               isSticky
@@ -131,46 +130,45 @@ export default function Page() {
             <h2 className="text-2xl font-bold mb-4 text-gray-800">
               {cat.name}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 auto-rows-[1fr]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative">
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div key={product.id} className="relative h-full">
-                    <div
-                      className="group relative transition-transform duration-300 will-change-transform hover:z-10 hover:scale-[1.02] h-full bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
-                      style={{ transformOrigin: "center center" }}
-                    >
-                      <div>
-                        <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
-                          {product.image_url ? (
-                            <Image
-                              src={product.image_url}
-                              alt={product.name}
-                              width={300}
-                              height={160}
-                              className="object-cover w-full h-full"
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gray-200" />
-                          )}
+                  <div key={product.id} className="relative h-full group">
+                    <div className="relative z-0 group-hover:z-10 group-hover:scale-105 group-hover:shadow-2xl transition-transform duration-300 ease-in-out">
+                      <div className="absolute inset-0 rounded-lg transform scale-100 group-hover:scale-105 transition-transform duration-300 bg-white/90 p-4 backdrop-blur-md shadow-md flex flex-col justify-between pointer-events-auto">
+                        <div>
+                          <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
+                            {product.image_url ? (
+                              <Image
+                                src={product.image_url}
+                                alt={product.name}
+                                width={300}
+                                height={160}
+                                className="object-cover w-full h-full"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gray-200" />
+                            )}
+                          </div>
+                          <h3 className="text-lg font-semibold">
+                            {product.name}
+                          </h3>
+                          <p className="text-sm text-gray-700 min-h-[48px]">
+                            {product.description}
+                          </p>
                         </div>
-                        <h3 className="text-lg font-semibold">
-                          {product.name}
-                        </h3>
-                        <p className="text-sm text-gray-700 group-hover:block hidden min-h-[48px]">
-                          {product.description}
-                        </p>
-                      </div>
-                      <div className="mt-2 flex justify-between items-center">
-                        <div className="font-bold text-xl text-green-700">
-                          {product.price} ₽
+                        <div className="mt-2 flex justify-between items-center">
+                          <div className="font-bold text-xl text-green-700">
+                            {product.price} ₽
+                          </div>
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
+                          >
+                            В корзину
+                          </button>
                         </div>
-                        <button
-                          onClick={() => addToCart(product)}
-                          className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
-                        >
-                          В корзину
-                        </button>
                       </div>
                     </div>
                   </div>
