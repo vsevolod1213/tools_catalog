@@ -26,26 +26,25 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Ошибка парсинга формы' });
     }
 
-    console.log('[FIELDS]', fields);
-    console.log('[FILES]', files);
-
     const fileInput = files.file;
     const file = Array.isArray(fileInput) ? fileInput[0] : fileInput;
 
-    //  Заменяем file.filepath -> file.path
     if (!file || !file.path) {
       console.error('[Missing file or path]', file);
       return res.status(400).json({ error: 'Файл не получен или путь отсутствует' });
     }
 
     try {
-      const buffer = await fs.readFile(file.path); // <- корректное чтение
-      const fileName = `${Date.now()}-${file.name}`; // <- оригинальное имя
+      const buffer = await fs.readFile(file.path);
+
+      // 🧼 очищаем имя
+      const safeName = file.name.replace(/[^\w.-]/g, '_');
+      const fileName = `${Date.now()}-${safeName}`;
 
       const { error } = await supabase.storage
         .from('images')
         .upload(fileName, buffer, {
-          contentType: file.type, // <- корректный MIME-тип
+          contentType: file.type,
         });
 
       if (error) {
