@@ -99,24 +99,7 @@ export default function Page() {
               Корзина ({cart.length})
             </a>
           </nav>
-          {/* Поле поиска с анимацией позиционирования */}
-          <div
-            className={`transition-all duration-300 ease-in-out z-10 px-6 ${
-              isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md"
-                : "relative mt-8 mx-auto max-w-md"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Поиск товаров"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
-            />
-          </div>
-
-          
+                 
           
 
           {/* Телефон */}
@@ -141,27 +124,30 @@ export default function Page() {
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
                   <div key={product.id} className="relative"> 
+                    <div className="relative h-full">
+  
                     <div
                       className="group transition-transform duration-300 hover:scale-[1.02] min-h-[300px] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
                       >
-                      <div>
-                        <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
-                          {product.image_url ? (
-                            <Image
-                              src={product.image_url}
-                              alt={product.name}
-                              width={300}
-                              height={160}
-                              className="object-cover w-full h-full"
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gray-200" />
-                          )}
+                        <div>
+                          <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
+                            {product.image_url ? (
+                              <Image
+                                src={product.image_url}
+                                alt={product.name}
+                                width={300}
+                                height={160}
+                                className="object-cover w-full h-full"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gray-200" />
+                            )}
+                          </div>
+                          <h3 className="text-lg font-semibold">{product.name}</h3>
+                          <p className="text-sm text-gray-700 group-hover:block hidden min-h-[48px]">
+                            {product.description}
+                          </p>
                         </div>
-                        <h3 className="text-lg font-semibold">{product.name}</h3>
-                        <p className="text-sm text-gray-700 group-hover:block hidden min-h-[48px]">
-                          {product.description}
-                        </p>
                       </div>
                       <div className="mt-2 flex justify-between items-center">
                         <div className="font-bold text-xl text-green-700">
@@ -180,6 +166,28 @@ export default function Page() {
             </div>
           </section>
         ))}
+
+        {isSticky ? (
+          <div className="fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md z-50 px-4">
+            <input
+              type="text"
+              placeholder="Поиск товаров"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+            />
+          </div>
+        ) : (
+          <div className="w-full max-w-md mx-auto mb-8 transition-all duration-700">
+            <input
+              type="text"
+              placeholder="Поиск товаров"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+            />
+          </div>
+        )}
       </main>
     </div>
   );
