@@ -103,16 +103,20 @@ export default function Page() {
             className={`transition-all duration-300 ease-in-out z-10 ${
               isSticky
                 ? "relative mt-8 flex justify-center w-full"
-                : "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md px-6"
+                : "fixed top-[72px] left-1/2 -translate-x-1/2 w-full px-6"
             }`}
           >
+
             <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full max-w-md bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+              className={`bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
+                isSticky ? "max-w-md" : "max-w-2xl"
+              }`}
             />
+
           </div>
 
 
