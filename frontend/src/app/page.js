@@ -104,7 +104,7 @@ export default function Page() {
           {/* Центр — Поисковая строка */}
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
-              isSticky
+              !isSticky
                 ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2"
                 : "relative flex justify-center w-full mt-8 px-4"
             }`}
