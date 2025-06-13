@@ -102,15 +102,26 @@ export default function Page() {
           </nav>
 
           {/* Центр — Поисковая строка */}
-          <div className={`transition-all duration-300 ease-in-out flex-1 flex justify-center`}>
+          <div
+            className={`transition-all duration-300 ease-in-out z-10 ${
+              isSticky
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2"
+                : "relative flex justify-center w-full mt-8 px-4"
+            }`}
+          >
             <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className={`bg-white/40 border border-gray-300 rounded-full px-6 py-2 max-w-[320px] focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full`}
+              className={`transition-all duration-300 bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full ${
+                isSticky
+                  ? "py-2 text-sm max-w-[320px]"
+                  : "py-4 text-base max-w-2xl"
+              }`}
             />
           </div>
+
 
           {/* Правая часть — телефон */}
           <div className="text-gray-200 text-xs sm:text-sm whitespace-nowrap">
