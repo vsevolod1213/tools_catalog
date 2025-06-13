@@ -99,27 +99,14 @@ export default function Page() {
             </a>
           </nav>
 
-          {isSticky && (
-            <div className="z-10 fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md px-6">
-              <input
-                type="text"
-                placeholder="Поиск товаров"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
-              />
-            </div>
-          )}
-
-          <div className="text-gray-200 text-xs sm:text-sm ml-auto">
-            Номер для связи: <span className="text-white font-semibold">+7 (812) 345 25-25</span>
-          </div>
-        </div>
-      </header>
-
-      <main className="pt-40 px-6 container mx-auto">
-        {!isSticky && (
-          <div className="w-full max-w-md mx-auto mb-8 transition-all duration-700">
+          {/* Поиск */}
+          <div
+            className={`transition-all duration-300 ease-in-out z-10 ${
+              isSticky
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md px-6"
+                : "relative mt-8 mx-auto max-w-md px-6"
+            }`}
+          >
             <input
               type="text"
               placeholder="Поиск товаров"
@@ -128,19 +115,30 @@ export default function Page() {
               className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
-        )}
 
+          <div className="text-gray-200 text-xs sm:text-sm ml-auto">
+            Номер для связи:{" "}
+            <span className="text-white font-semibold">
+              +7 (812) 345 25-25
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <main className="pt-40 px-6 container mx-auto">
         {categories.map((cat) => (
           <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">{cat.name}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+              {cat.name}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 auto-rows-[1fr]">
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div key={product.id} className="relative">
+                  <div key={product.id} className="relative h-full">
                     <div
-                      className="group transition-transform duration-300 transform hover:scale-[1.02] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between h-[100%]"
-                      style={{ willChange: "transform" }}
+                      className="group relative transition-transform duration-300 will-change-transform hover:z-10 hover:scale-[1.02] h-full bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
+                      style={{ transformOrigin: "center center" }}
                     >
                       <div>
                         <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
@@ -156,7 +154,9 @@ export default function Page() {
                             <div className="w-full h-full bg-gray-200" />
                           )}
                         </div>
-                        <h3 className="text-lg font-semibold">{product.name}</h3>
+                        <h3 className="text-lg font-semibold">
+                          {product.name}
+                        </h3>
                         <p className="text-sm text-gray-700 group-hover:block hidden min-h-[48px]">
                           {product.description}
                         </p>
