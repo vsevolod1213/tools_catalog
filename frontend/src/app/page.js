@@ -99,17 +99,25 @@ export default function Page() {
               Корзина ({cart.length})
             </a>
           </nav>
-
-          {/* Поиск */}
-          <div className="flex-1 hidden sm:block">
+          {/* Поле поиска с анимацией позиционирования */}
+          <div
+            className={`transition-all duration-300 ease-in-out z-10 px-6 ${
+              isSticky
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md"
+                : "relative mt-8 mx-auto max-w-md"
+            }`}
+          >
             <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full bg-white/40 border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md text-sm"
+              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
             />
           </div>
+
+          
+          
 
           {/* Телефон */}
           <div className="text-gray-200 text-xs sm:text-sm ml-auto">
@@ -121,19 +129,10 @@ export default function Page() {
         </div>
       </header>
 
+      
+        
+       
       <main className="pt-40 px-6 container mx-auto">
-        {!isSticky && (
-          <div className="w-full max-w-md mx-auto mb-8 transition-all duration-700">
-            <input
-              type="text"
-              placeholder="Поиск товаров"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
-            />
-          </div>
-        )}
-
         {categories.map((cat) => (
           <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">{cat.name}</h2>
@@ -141,39 +140,41 @@ export default function Page() {
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div
-                    key={product.id}
-                    className="group transition-transform hover:scale-[1.02] min-h-[260px] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4 flex-shrink-0">
-                        {product.image_url ? (
-                          <Image
-                            src={product.image_url}
-                            alt={product.name}
-                            width={300}
-                            height={160}
-                            className="object-cover w-full h-full"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gray-200" />
-                        )}
+                  <div className="relative">
+                    <div
+                      key={product.id}
+                       className="group transition-transform duration-300 hover:scale-[1.02] min-h-[300px] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
+                          {product.image_url ? (
+                            <Image
+                              src={product.image_url}
+                              alt={product.name}
+                              width={300}
+                              height={160}
+                              className="object-cover w-full h-full"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-200" />
+                          )}
+                        </div>
+                        <h3 className="text-lg font-semibold">{product.name}</h3>
+                        <p className="text-sm text-gray-700 group-hover:block hidden min-h-[48px]">
+                          {product.description}
+                        </p>
                       </div>
-                      <h3 className="text-lg font-semibold">{product.name}</h3>
-                      <p className="text-sm text-gray-700 group-hover:block hidden transition-opacity duration-200">
-                        {product.description}
-                      </p>
-                    </div>
-                    <div className="mt-2 flex justify-between items-center">
-                      <div className="font-bold text-xl text-green-700">
-                        {product.price} ₽
+                      <div className="mt-2 flex justify-between items-center">
+                        <div className="font-bold text-xl text-green-700">
+                          {product.price} ₽
+                        </div>
+                        <button
+                          onClick={() => addToCart(product)}
+                          className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
+                        >
+                          В корзину
+                        </button>
                       </div>
-                      <button
-                        onClick={() => addToCart(product)}
-                        className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
-                      >
-                        В корзину
-                      </button>
                     </div>
                   </div>
                 ))}
