@@ -129,7 +129,7 @@ export default function Page() {
                     <div
                       className="group transition-transform duration-300 hover:scale-[1.02] min-h-[300px] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
                       >
-                        <div>
+                      <div>
                           <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
                             {product.image_url ? (
                               <Image
@@ -147,18 +147,19 @@ export default function Page() {
                           <p className="text-sm text-gray-700 group-hover:block hidden min-h-[48px]">
                             {product.description}
                           </p>
+                        
                         </div>
-                      </div>
-                      <div className="mt-2 flex justify-between items-center">
-                        <div className="font-bold text-xl text-green-700">
-                          {product.price} ₽
+                        <div className="mt-2 flex justify-between items-center">
+                          <div className="font-bold text-xl text-green-700">
+                            {product.price} ₽
+                          </div>
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
+                          >
+                            В корзину
+                          </button>
                         </div>
-                        <button
-                          onClick={() => addToCart(product)}
-                          className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
-                        >
-                          В корзину
-                        </button>
                       </div>
                     </div>
                   </div>
