@@ -140,11 +140,10 @@ export default function Page() {
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div className="relative">
+                  <div key={product.id} className="relative"> 
                     <div
-                      key={product.id}
-                       className="group transition-transform duration-300 hover:scale-[1.02] min-h-[300px] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
-                    >
+                      className="group transition-transform duration-300 hover:scale-[1.02] min-h-[300px] bg-white/80 rounded-lg shadow-md p-4 backdrop-blur-md flex flex-col justify-between"
+                      >
                       <div>
                         <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
                           {product.image_url ? (
