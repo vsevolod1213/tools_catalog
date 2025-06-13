@@ -101,7 +101,7 @@ export default function Page() {
 
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
-              isSticky
+              !isSticky
                 ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md px-6"
                 : "relative mt-8 mx-auto w-full px-4"
             }`}
@@ -112,7 +112,7 @@ export default function Page() {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               className={`bg-white/40 border border-gray-300 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full transition-all duration-300 ${
-                isSticky ? "max-w-md mx-auto" : "max-w-2xl"
+                isSticky ? "max-w-2xl" : "max-w-md mx-auto"
               }`}
             />
           </div>
