@@ -102,7 +102,7 @@ export default function Page() {
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
               !isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-8" // шапка — короткая
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2" // шапка — короткая
                 : "relative mt-8 flex justify-center w-full px-4" // main — центрируем
             }`}
           >
