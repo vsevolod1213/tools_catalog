@@ -102,23 +102,23 @@ export default function Page() {
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
               !isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 max-w-[320px] w-full px-2"
-                : "relative mt-8 mx-auto w-full px-4"
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2" // шапка — короткая
+                : "relative mt-8 flex justify-center w-full px-4" // main — центрируем
             }`}
           >
-
-           <input
+            <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
-                isSticky ? "py-2 text-sm" : "py-4 max-w-2xl mx-auto text-base"
+              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 ${
+                isSticky
+                  ? "py-4 w-full max-w-2xl text-base" // main — шире и выше
+                  : "py-2 w-full max-w-[320px] text-sm" // шапка — компактная
               }`}
             />
-
-
           </div>
+
 
 
 
