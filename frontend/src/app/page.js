@@ -63,8 +63,10 @@ export default function Page() {
       </div>
 
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
-        <div className="container mx-auto flex flex-wrap sm:flex-nowrap justify-between items-center py-3 px-4 gap-2">
-          <nav className="flex flex-wrap gap-2 items-center text-sm">
+        <div className="container mx-auto flex items-center justify-between py-3 px-4 gap-4">
+          
+          {/* Левая часть — кнопки */}
+          <nav className="flex gap-2 items-center text-sm">
             <div className="relative group">
               <button className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
                 Каталог
@@ -99,32 +101,19 @@ export default function Page() {
             </a>
           </nav>
 
-          <div
-            className={`transition-all duration-300 ease-in-out z-10 ${
-              !isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2"  // Шапка (короткая)
-                : "relative mt-8 flex justify-center w-full px-4"                         // Main (длинная)
-            }`}
-          >
+          {/* Центр — Поисковая строка */}
+          <div className={`transition-all duration-300 ease-in-out flex-1 flex justify-center`}>
             <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
-                isSticky
-                  ? "py-2 text-sm max-w-[320px] mx-auto" // Шапка (короткая строка, центр)
-                  : "py-4 text-base max-w-2xl mx-auto"   // Main (длинная строка, центр)
-              }`}
-
+              className={`bg-white/40 border border-gray-300 rounded-full px-6 py-2 max-w-[320px] focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full`}
             />
           </div>
 
-
-
-
-
-          <div className="text-gray-200 text-xs sm:text-sm ml-auto">
+          {/* Правая часть — телефон */}
+          <div className="text-gray-200 text-xs sm:text-sm whitespace-nowrap">
             Номер для связи:{" "}
             <span className="text-white font-semibold">
               +7 (812) 345 25-25
@@ -132,6 +121,7 @@ export default function Page() {
           </div>
         </div>
       </header>
+
 
       <main className="pt-40 px-6 container mx-auto">
         {categories.map((cat) => (
