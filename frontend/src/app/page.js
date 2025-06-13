@@ -101,20 +101,19 @@ export default function Page() {
 
           <div
             className={`transition-all duration-300 ease-in-out z-10 ${
-              !isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-md px-6"
+              isSticky
+                ? "fixed top-[72px] left-1/2 -translate-x-1/2 max-w-[320px] w-full px-2"
                 : "relative mt-8 mx-auto w-full px-4"
             }`}
           >
+
            <input
               type="text"
               placeholder="Поиск товаров"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full transition-all duration-300 ${
-                isSticky
-                  ? "max-w-md mx-auto py-2 text-sm"
-                  : "max-w-2xl py-4 text-base"
+              className={`bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-300 w-full ${
+                isSticky ? "py-2 text-sm" : "py-4 max-w-2xl mx-auto text-base"
               }`}
             />
 
