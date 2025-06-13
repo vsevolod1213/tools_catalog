@@ -32,19 +32,20 @@ export default async function handler(req, res) {
     const fileInput = files.file;
     const file = Array.isArray(fileInput) ? fileInput[0] : fileInput;
 
-    if (!file || !file.filepath) {
-      console.error('[Missing file or filepath]', file);
-      return res.status(400).json({ error: 'Файл не получен или filepath отсутствует' });
+    //  Заменяем file.filepath -> file.path
+    if (!file || !file.path) {
+      console.error('[Missing file or path]', file);
+      return res.status(400).json({ error: 'Файл не получен или путь отсутствует' });
     }
 
     try {
-      const buffer = await fs.readFile(file.filepath);
-      const fileName = `${Date.now()}-${file.originalFilename}`;
+      const buffer = await fs.readFile(file.path); // <- корректное чтение
+      const fileName = `${Date.now()}-${file.name}`; // <- оригинальное имя
 
       const { error } = await supabase.storage
         .from('images')
         .upload(fileName, buffer, {
-          contentType: file.mimetype,
+          contentType: file.type, // <- корректный MIME-тип
         });
 
       if (error) {
