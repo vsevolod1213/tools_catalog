@@ -115,12 +115,12 @@ export default function Page() {
         </div>
       </header>
       
-      {/* ВНЕШНЯЯ строка поиска, анимировано перемещается при scroll */}
+      {/* Центр — поисковая строка, она же "перетекает" */}
       <div
         className={`transition-all duration-500 ease-in-out z-30 ${
           !isSticky
             ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4"
-            : "relative mt-8 max-w-[320px] mx-auto"
+            : "absolute top-[16px] left-1/2 -translate-x-1/2 w-full max-w-[320px]"
         }`}
       >
         <input
@@ -133,6 +133,7 @@ export default function Page() {
           }`}
         />
       </div>
+
 
 
       <main className="pt-40 px-6 container mx-auto">
