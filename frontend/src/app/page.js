@@ -103,18 +103,17 @@ export default function Page() {
 
           {/* Центр — ПРИ `isSticky`, тут должна появиться строка */}
           {isSticky && (
-            <div className="flex-1 flex justify-center">
-              <div className="w-full max-w-[320px]">
-                <input
-                  type="text"
-                  placeholder="Поиск товаров"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  className="transition-all duration-500 ease-in-out bg-white/40 border border-gray-300 rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full"
-                />
-              </div>
+            <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full px-4 max-w-[320px] z-30 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
+              <input
+                type="text"
+                placeholder="Поиск товаров"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="w-full bg-white/40 border border-gray-300 rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+              />
             </div>
           )}
+
 
           {/* Правая часть — номер */}
           <div className="text-gray-200 text-xs sm:text-sm whitespace-nowrap">
@@ -127,7 +126,7 @@ export default function Page() {
       
       {/* ВНЕШНЯЯ строка только когда не липкая */}
       {!isSticky && (
-        <div className="fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-500 ease-in-out">
+        <div className="fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
           <input
             type="text"
             placeholder="Поиск товаров"
