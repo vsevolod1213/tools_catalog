@@ -11,6 +11,7 @@ export default function Page() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
+
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 100);
@@ -46,9 +47,39 @@ export default function Page() {
     }
   }, [searchValue, products]);
 
-  const addToCart = (product) => {
-    setCart((prev) => [...prev, product]);
+  const getQuantity = (productId) => {
+    const item = cart.find((p) => p.id === productId);
+    return item ? item.quantity : 0;
   };
+
+  const increment = (product) => {
+    setCart((prev) => {
+      const existing = prev.find((p) => p.id === product.id);
+      if (existing) {
+        return prev.map((p) =>
+          p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+        );
+      } else {
+        return [...prev, { id: product.id, quantity: 1 }];
+      }
+    });
+  };
+
+  const decrement = (product) => {
+    setCart((prev) => {
+      const existing = prev.find((p) => p.id === product.id);
+      if (!existing) return prev;
+      if (existing.quantity === 1) {
+        return prev.filter((p) => p.id !== product.id);
+      } else {
+        return prev.map((p) =>
+          p.id === product.id ? { ...p, quantity: p.quantity - 1 } : p
+        );
+      }
+    });
+  };
+
+
 
   return (
     <div className="relative min-h-screen font-sans">
@@ -97,7 +128,8 @@ export default function Page() {
               href="#"
               className="min-w-[110px] text-center px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
-              Корзина ({cart.length})
+              Корзина ({cart?.reduce((sum, p) => sum + p.quantity, 0)})
+
             </a>
           </nav>
 
@@ -173,12 +205,31 @@ export default function Page() {
                         </div>
                         <div className="mt-2 flex justify-between items-center">
                           <div className="font-bold text-xl text-green-700">{product.price} ₽</div>
-                          <button
-                            onClick={() => addToCart(product)}
-                            className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
-                          >
-                            В корзину
-                          </button>
+                          {getQuantity(product.id) === 0 ? (
+                            <button
+                              onClick={() => increment(product)}
+                              className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
+                            >
+                              В корзину
+                            </button>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => decrement(product)}
+                                className="w-8 h-8 rounded-full bg-orange-600 text-white font-bold hover:bg-orange-700 transition"
+                              >
+                                −
+                              </button>
+                              <span className="w-6 text-center">{getQuantity(product.id)}</span>
+                              <button
+                                onClick={() => increment(product)}
+                                className="w-8 h-8 rounded-full bg-orange-600 text-white font-bold hover:bg-orange-700 transition"
+                              >
+                                +
+                              </button>
+                            </div>
+                          )}
+
                         </div>
                       </div>
                     </div>
