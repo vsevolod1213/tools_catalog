@@ -67,7 +67,38 @@ export default function Page() {
           
           {/* Левая часть — кнопки */}
           <nav className="flex gap-2 items-center text-sm">
-            {/* ... */}
+            <div className="relative group">
+              <button className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+                Каталог
+              </button>
+              <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                {categories.length > 0 ? (
+                  categories.map((cat) => (
+                    <a
+                      key={cat.id}
+                      href={`#category-${cat.id}`}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                    >
+                      {cat.name}
+                    </a>
+                  ))
+                ) : (
+                  <p className="px-4 py-2 text-gray-500">Нет категорий</p>
+                )}
+              </div>
+            </div>
+            <a
+              href="#"
+              className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
+              Услуги
+            </a>
+            <a
+              href="#"
+              className="min-w-[110px] text-center px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+            >
+              Корзина ({cart.length})
+            </a>
           </nav>
 
           {/* Центр — ПРИ `isSticky`, тут должна появиться строка */}
