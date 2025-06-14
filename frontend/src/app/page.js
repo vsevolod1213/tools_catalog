@@ -10,6 +10,14 @@ export default function Page() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  const getTotalPrice = () =>
+    cart.reduce((sum, p) => {
+      const prod = products.find((x) => x.id === p.id);
+      return sum + (prod?.price ?? 0) * p.quantity;
+    }, 0);
 
 
   useEffect(() => {
@@ -79,6 +87,33 @@ export default function Page() {
     });
   };
 
+  const handleSubmitOrder = async () => {
+    if (!phone.trim()) {
+      alert("Введите номер телефона");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone,
+          items: cart,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Ошибка при оформлении заказа");
+
+      alert("Заказ отправлен!");
+      setCart([]);
+      setPhone("");
+      setShowCart(false);
+    } catch (err) {
+      alert("Ошибка при оформлении заказа");
+    }
+  };
+
 
 
   return (
@@ -124,13 +159,13 @@ export default function Page() {
             >
               Услуги
             </a>
-            <a
-              href="#"
+            <button
+              onClick={() => setShowCart(true)}
               className="min-w-[110px] text-center px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               Корзина ({cart?.reduce((sum, p) => sum + p.quantity, 0)})
+            </button>
 
-            </a>
           </nav>
 
           {/* Центр — ПРИ `isSticky`, тут должна появиться строка */}
@@ -240,6 +275,47 @@ export default function Page() {
           </section>
         ))}
       </main>
+      {showCart && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4">Ваш заказ</h2>
+            <ul className="mb-4 max-h-60 overflow-y-auto">
+              {cart.map((item) => {
+                const prod = products.find((p) => p.id === item.id);
+                return (
+                  <li key={item.id} className="flex justify-between mb-2">
+                    <span>{prod?.name}</span>
+                    <span>{item.quantity} × {prod?.price} ₽</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="font-bold mb-2">Итого: {getTotalPrice()} ₽</p>
+            <input
+              type="tel"
+              placeholder="Номер телефона"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full border rounded px-4 py-2 mb-3"
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowCart(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Отмена
+              </button>
+              <button
+                onClick={handleSubmitOrder}
+                className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition"
+              >
+                Сделать заказ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
