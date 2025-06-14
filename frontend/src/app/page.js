@@ -126,13 +126,13 @@ export default function Page() {
       
       {/* ВНЕШНЯЯ строка только когда не липкая */}
       {!isSticky && (
-        <div className="fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
+        <div className="fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-[1000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,opacity]">
           <input
             type="text"
             placeholder="Поиск товаров"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="transition-all duration-500 ease-in-out bg-white/40 border border-gray-300 rounded-full px-6 py-4 text-base focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full"
+            className="transition-all duration-[1000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,opacity] bg-white/40 border border-gray-300 rounded-full px-6 py-4 text-base focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full"
           />
         </div>
       )}
