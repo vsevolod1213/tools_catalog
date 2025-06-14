@@ -62,6 +62,7 @@ export default function Page() {
         />
       </div>
 
+      {/* FIXED HEADER */}
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
         <div className="container mx-auto flex items-center justify-between py-3 px-4 gap-4">
           
@@ -95,35 +96,16 @@ export default function Page() {
             </a>
             <a
               href="#"
-              className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+              className="min-w-[110px] text-center px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
             >
               Корзина ({cart.length})
             </a>
           </nav>
 
-          {/* Центр — Поисковая строка */}
-          <div
-            className={`transition-all duration-300 ease-in-out z-10 ${
-              !isSticky
-                ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-[320px] px-2"
-                : "relative flex justify-center w-full mt-8 px-4"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Поиск товаров"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className={`transition-all duration-300 bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full ${
-                isSticky
-                  ? "py-2 text-sm max-w-[320px]"
-                  : "py-4 text-base max-w-2xl"
-              }`}
-            />
-          </div>
+          {/* Центр — заглушка (пусто), строка будет вынесена ниже отдельно */}
+          <div className="hidden sm:block flex-1" />
 
-
-          {/* Правая часть — телефон */}
+          {/* Правая часть — номер */}
           <div className="text-gray-200 text-xs sm:text-sm whitespace-nowrap">
             Номер для связи:{" "}
             <span className="text-white font-semibold">
@@ -132,6 +114,25 @@ export default function Page() {
           </div>
         </div>
       </header>
+      
+      {/* ВНЕШНЯЯ строка поиска, анимировано перемещается при scroll */}
+      <div
+        className={`transition-all duration-500 ease-in-out z-30 ${
+          !isSticky
+            ? "fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4"
+            : "relative mt-8 max-w-[320px] mx-auto"
+        }`}
+      >
+        <input
+          type="text"
+          placeholder="Поиск товаров"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className={`transition-all duration-500 ease-in-out bg-white/40 border border-gray-300 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full ${
+            isSticky ? "py-2 text-sm" : "py-4 text-base"
+          }`}
+        />
+      </div>
 
 
       <main className="pt-40 px-6 container mx-auto">
