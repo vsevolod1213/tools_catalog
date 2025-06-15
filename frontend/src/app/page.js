@@ -271,7 +271,7 @@ export default function Page() {
 
 
 
-      <main className="pt-40 pb-32 px-6 container mx-auto">
+      <main className={`pb-32 px-6 container mx-auto ${isSticky ? 'pt-40' : 'pt-52'}`}>
         {categories.map((cat) => (
           <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">
