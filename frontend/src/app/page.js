@@ -257,7 +257,7 @@ export default function Page() {
       
       {/* ВНЕШНЯЯ строка только когда не липкая */}
       {!isSticky && (
-        <div className="fixed top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-[1000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,opacity]">
+        <div className="fixed top-[160px] sm:top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-[1000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,opacity]">
           <input
             type="text"
             placeholder="Поиск товаров"
