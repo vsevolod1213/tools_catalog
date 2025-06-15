@@ -129,66 +129,71 @@ export default function Page() {
       </div>
 
       <header className="bg-black/60 text-white shadow fixed w-full z-20">
-        <div className="container mx-auto flex items-center justify-between py-3 px-4 gap-4">
-          
-          {/* Левая часть — кнопки */}
-          <nav className="flex gap-2 items-center text-sm">
-            <div className="relative group">
-              <button className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
-                Каталог
-              </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                {categories.length > 0 ? (
-                  categories.map((cat) => (
-                    <a
-                      key={cat.id}
-                      href={`#category-${cat.id}`}
-                      className="block px-4 py-2 hover:bg-gray-200"
-                    >
-                      {cat.name}
-                    </a>
-                  ))
-                ) : (
-                  <p className="px-4 py-2 text-gray-500">Нет категорий</p>
-                )}
+        <div className="container mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 py-3">
+
+          {/* Верхняя строка на мобилках: кнопки + номер */}
+          <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+
+            {/* Левая часть — кнопки */}
+            <nav className="flex flex-wrap gap-2 text-sm justify-center sm:justify-start">
+              <div className="relative group">
+                <button className="w-full sm:w-auto px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+                  Каталог
+                </button>
+                <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                  {categories.length > 0 ? (
+                    categories.map((cat) => (
+                      <a
+                        key={cat.id}
+                        href={`#category-${cat.id}`}
+                        className="block px-4 py-2 hover:bg-gray-200"
+                      >
+                        {cat.name}
+                      </a>
+                    ))
+                  ) : (
+                    <p className="px-4 py-2 text-gray-500">Нет категорий</p>
+                  )}
+                </div>
               </div>
+
+              <a
+                href="#"
+                className="w-full sm:w-auto px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition text-center"
+              >
+                Услуги
+              </a>
+
+              <button
+                onClick={() => setShowCart(true)}
+                className="w-full sm:w-auto min-w-[110px] text-center px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+              >
+                Корзина ({cart?.reduce((sum, p) => sum + p.quantity, 0)})
+              </button>
+            </nav>
+
+            {/* Номер телефона */}
+            <div className="text-gray-200 text-center sm:text-right text-xs sm:text-sm whitespace-nowrap">
+              Номер для связи:{" "}
+              <span className="text-white font-semibold">+7 (812) 345 25-25</span>
             </div>
-            <a
-              href="#"
-              className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-            >
-              Услуги
-            </a>
-            <button
-              onClick={() => setShowCart(true)}
-              className="min-w-[110px] text-center px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-            >
-              Корзина ({cart?.reduce((sum, p) => sum + p.quantity, 0)})
-            </button>
+          </div>
 
-          </nav>
-
-          {/* Центр — ПРИ `isSticky`, тут должна появиться строка */}
+          {/* Центрированный поиск при isSticky */}
           {isSticky && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full px-4 max-w-[320px] z-30 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
+            <div className="w-full px-2 sm:px-0 sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:top-[16px] max-w-xs z-30 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]">
               <input
                 type="text"
                 placeholder="Поиск товаров"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                className="w-full bg-white/40 border border-gray-300 rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                className="w-full bg-white/40 border border-gray-300 rounded-full px-4 sm:px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
               />
             </div>
           )}
-
-
-          {/* Правая часть — номер */}
-          <div className="text-gray-200 text-xs sm:text-sm whitespace-nowrap">
-            Номер для связи:{" "}
-            <span className="text-white font-semibold">+7 (812) 345 25-25</span>
-          </div>
         </div>
       </header>
+
 
       
       {/* ВНЕШНЯЯ строка только когда не липкая */}
