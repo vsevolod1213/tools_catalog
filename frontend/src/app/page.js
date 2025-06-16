@@ -2,6 +2,68 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+function ProductCard({ product, onAdd, onRemove, getQuantity }) {
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % product.image_urls.length);
+    }, 2000);
+    return () => clearInterval(id);
+  }, [product.image_urls.length]);
+
+  return (
+    <div className="relative h-full">
+      <div className="relative group h-full">
+        <div className="relative transition-transform duration-300 group-hover:scale-105 group-hover:z-50 group-hover:shadow-2xl bg-white/90 rounded-lg p-4 backdrop-blur-md flex flex-col justify-between">
+          <div>
+            {/* Квадратное изображение со слайдером */}
+            <div className="relative w-full aspect-square overflow-hidden mb-4 rounded bg-gray-300">
+              <Image
+                src={product.image_urls[currentImage] || "/fallback.png"}
+                alt={product.name}
+                width={300}
+                height={300}
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <h3 className="text-lg font-semibold">{product.name}</h3>
+            <p className="text-sm text-gray-700 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-32 transition-all duration-300 overflow-hidden">
+              {product.description}
+            </p>
+          </div>
+          <div className="mt-2 flex justify-between items-center">
+            <div className="font-bold text-xl text-green-700">{product.price} ₽</div>
+            {getQuantity(product.id) === 0 ? (
+              <button
+                onClick={() => onAdd(product)}
+                className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
+              >
+                В корзину
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => onRemove(product)}
+                  className="w-8 h-8 rounded-full bg-orange-600 text-white font-bold hover:bg-orange-700 transition"
+                >
+                  −
+                </button>
+                <span className="w-6 text-center">{getQuantity(product.id)}</span>
+                <button
+                  onClick={() => onAdd(product)}
+                  className="w-8 h-8 rounded-full bg-orange-600 text-white font-bold hover:bg-orange-700 transition"
+                >
+                  +
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Page() {
   const [isSticky, setIsSticky] = useState(false);
@@ -282,59 +344,15 @@ export default function Page() {
               {filteredProducts
                 .filter((p) => p.category_id === cat.id)
                 .map((product) => (
-                  <div key={product.id} className="relative h-full">
-                    <div className="relative group h-full">
-                      <div className="relative transition-transform duration-300 group-hover:scale-105 group-hover:z-50 group-hover:shadow-2xl bg-white/90 rounded-lg p-4 backdrop-blur-md flex flex-col justify-between">
-                        <div>
-                          <div className="w-full h-40 rounded bg-gray-300 overflow-hidden mb-4">
-                            {product.image_url ? (
-                              <Image
-                                src={product.image_url}
-                                alt={product.name}
-                                width={300}
-                                height={160}
-                                className="object-cover w-full h-full"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-gray-200" />
-                            )}
-                          </div>
-                          <h3 className="text-lg font-semibold">{product.name}</h3>
-                          <p className="text-sm text-gray-700 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-32 transition-all duration-300 overflow-hidden">{product.description}</p>
-                        </div>
-                        <div className="mt-2 flex justify-between items-center">
-                          <div className="font-bold text-xl text-green-700">{product.price} ₽</div>
-                          {getQuantity(product.id) === 0 ? (
-                            <button
-                              onClick={() => increment(product)}
-                              className="px-4 py-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition"
-                            >
-                              В корзину
-                            </button>
-                          ) : (
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => decrement(product)}
-                                className="w-8 h-8 rounded-full bg-orange-600 text-white font-bold hover:bg-orange-700 transition"
-                              >
-                                −
-                              </button>
-                              <span className="w-6 text-center">{getQuantity(product.id)}</span>
-                              <button
-                                onClick={() => increment(product)}
-                                className="w-8 h-8 rounded-full bg-orange-600 text-white font-bold hover:bg-orange-700 transition"
-                              >
-                                +
-                              </button>
-                            </div>
-                          )}
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onAdd={increment}
+                    onRemove={decrement}
+                    getQuantity={getQuantity}
+                  />
                 ))}
+
             </div>
           </section>
         ))}

@@ -10,7 +10,7 @@ function AddProductPageInner() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [saving, setSaving] = useState(false);
 
@@ -48,22 +48,17 @@ function AddProductPageInner() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("file", file); // <--- ключ должен быть "file" (именно так!)
+    formData.append("file", file);
 
-    try {
-      const res = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      });
+    const res = await fetch("/api/upload-image", {
+      method: "POST",
+      body: formData,
+    });
 
-      const data = await res.json();
-      if (res.ok && data.url) {
-        setImageUrl(data.url);
-      } else {
-        alert("Ошибка при загрузке изображения.");
-      }
-    } catch (err) {
-      console.error(err);
+    const data = await res.json();
+    if (res.ok && data.url) {
+      setImageUrls(prev => [...prev, data.url]);
+    } else {
       alert("Ошибка при загрузке изображения.");
     }
   };
@@ -86,7 +81,7 @@ function AddProductPageInner() {
           name,
           description,
           price,
-          image_url: imageUrl,
+          image_urls: imageUrls,
           category_id: categoryId,
         }),
       });
@@ -173,15 +168,10 @@ function AddProductPageInner() {
               onChange={handleImageUpload}
               className="w-full px-3 py-2 rounded border bg-white"
             />
-            {imageUrl && (
-              <Image
-                src={imageUrl}
-                alt="Превью"
-                width={100}
-                height={100}
-                className="rounded border"
-              />
-            )}
+            {imageUrls.map((url, idx) => (
+              <Image key={idx} src={url} alt={`preview-${idx}`} width={100} height={100} className="rounded border" />
+              ))}
+
             <button
               type="submit"
               className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full shadow transition"
