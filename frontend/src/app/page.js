@@ -72,7 +72,7 @@ function ProductCard({ product, onAdd, onRemove, getQuantity }) {
             </div>
 
             <h3 className="text-lg font-semibold">{product.name}</h3>
-            <p className="text-sm text-gray-700 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-32 transition-all duration-300 overflow-hidden">
+            <p className="whitespace-pre-line text-sm text-gray-700 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-48 transition-all duration-300 overflow-hidden">
               {product.description}
             </p>
           </div>
