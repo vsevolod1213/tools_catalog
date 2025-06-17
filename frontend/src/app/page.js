@@ -252,7 +252,7 @@ export default function Page() {
                   Каталог
                 </button>
                 {isMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[60]">
                     {categories.length > 0 ? (
                       categories.map((cat) => (
                         <a
