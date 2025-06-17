@@ -252,7 +252,7 @@ export default function Page() {
                   Каталог
                 </button>
                 {isMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[9999]">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-9999">
                     {categories.length > 0 ? (
                       categories.map((cat) => (
                         <a
@@ -402,7 +402,7 @@ export default function Page() {
           if (categoryProducts.length === 0) return null;
 
           return (
-            <section key={cat.id} id={`category-${cat.id}`} className="mb-12 scroll-mt-24 sm:scroll-mt-32">
+            <section key={cat.id} id={`category-${cat.id}`} className="mb-12 scroll-mt-32 sm:scroll-mt-32">
               <h2 className="text-2xl font-bold mb-4 text-gray-800">{cat.name}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative z-0 min-h-[100px]">
                 {categoryProducts.map((product) => (
