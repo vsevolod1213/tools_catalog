@@ -402,7 +402,7 @@ export default function Page() {
           if (categoryProducts.length === 0) return null;
 
           return (
-            <section key={cat.id} id={`category-${cat.id}`} className="mb-12 scroll-mt-32 sm:scroll-mt-32">
+            <section key={cat.id} id={`category-${cat.id}`} className="mb-12 scroll-mt-36 sm:scroll-mt-32">
               <h2 className="text-2xl font-bold mb-4 text-gray-800">{cat.name}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative z-0 min-h-[100px]">
                 {categoryProducts.map((product) => (
