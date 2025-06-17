@@ -378,16 +378,15 @@ export default function Page() {
 
 
       <main className={`pb-32 px-6 container mx-auto ${isSticky ? 'pt-40' : 'pt-45'}`}>
-        {categories.map((cat) => (
-          <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">
-              {cat.name}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative z-0 min-h-[100px]">
+        {categories.map((cat) => {
+          const categoryProducts = filteredProducts.filter((p) => p.category_id === cat.id);
+          if (categoryProducts.length === 0) return null;
 
-              {filteredProducts
-                .filter((p) => p.category_id === cat.id)
-                .map((product) => (
+          return (
+            <section key={cat.id} id={`category-${cat.id}`} className="mb-12">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">{cat.name}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative z-0 min-h-[100px]">
+                {categoryProducts.map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -396,10 +395,11 @@ export default function Page() {
                     getQuantity={getQuantity}
                   />
                 ))}
+              </div>
+            </section>
+          );
+        })}
 
-            </div>
-          </section>
-        ))}
       </main>
       {showCart && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
