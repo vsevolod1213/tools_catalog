@@ -113,6 +113,8 @@ function ProductCard({ product, onAdd, onRemove, getQuantity }) {
 }
 
 export default function Page() {
+  const catalogRef = useRef(null);
+  const servicesRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [categories, setCategories] = useState([]);
@@ -122,6 +124,7 @@ export default function Page() {
   const [showCart, setShowCart] = useState(false);
   const [phone, setPhone] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   const getTotalPrice = () =>
     cart.reduce((sum, p) => {
@@ -164,6 +167,24 @@ export default function Page() {
       );
     }
   }, [searchValue, products]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        catalogRef.current &&
+        !catalogRef.current.contains(event.target) &&
+        servicesRef.current &&
+        !servicesRef.current.contains(event.target)
+      ) {
+        setIsMenuOpen(false);
+        setIsServicesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const getQuantity = (productId) => {
     const item = cart.find((p) => p.id === productId);
@@ -272,12 +293,24 @@ export default function Page() {
 </div>
 
 
-              <a
-                href="#"
-                className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-              >
-                Услуги
-              </a>
+              <div className="relative">
+                <button
+                  className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+                  onClick={() => setIsServicesOpen((prev) => !prev)}
+                >
+                  Услуги
+                </button>
+                {isServicesOpen && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[9999]">
+                    {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
+                      <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
 
               <button
                 onClick={() => setShowCart(true)}
@@ -311,14 +344,14 @@ export default function Page() {
           <div className="hidden sm:flex items-center justify-between">
             {/* Кнопки слева */}
             <nav className="flex gap-2 text-sm">
-              <div className="relative group">
+              <div className="relative group" ref={catalogRef}>
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
                   onClick={() => setIsMenuOpen((prev) => !prev)}
                 >
                   Каталог
                 </button>
-                {(isMenuOpen || typeof window === "undefined") && (
+                {isMenuOpen && (
                   <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg transition-opacity z-50">
                     {categories.length > 0 ? (
                       categories.map((cat) => (
@@ -339,12 +372,24 @@ export default function Page() {
               </div>
 
 
-              <a
-                href="#"
-                className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-              >
-                Услуги
-              </a>
+              <div className="relative group" ref={servicesRef}>
+                <button
+                  className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+                  onClick={() => setIsServicesOpen((prev) => !prev)}
+                >
+                  Услуги
+                </button>
+                {isServicesOpen && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[9999]">
+                    {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
+                      <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
 
               <button
                 onClick={() => setShowCart(true)}
@@ -380,7 +425,7 @@ export default function Page() {
 
 
       
-      {/* ВНЕШНЯЯ строка только когда не липкая */}
+      {/* ВНЕШНЯЯ строка только когда не липкая 
       {!isSticky && (
         <div className="fixed top-[100px] sm:top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-[1000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,opacity]">
           <input
@@ -391,7 +436,7 @@ export default function Page() {
             className="transition-all duration-[1000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[transform,opacity] bg-white/40 border border-gray-300 rounded-full px-6 py-4 text-base focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full"
           />
         </div>
-      )}
+      )}*/}
 
 
 
