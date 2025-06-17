@@ -4,13 +4,19 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 function ProductCard({ product, onAdd, onRemove, getQuantity }) {
   const [currentImage, setCurrentImage] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    if (!isHovered || product.image_urls.length < 2) return;
+
     const id = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % product.image_urls.length);
-    }, 2000);
+    }, 4000); // 4 секунды
+
     return () => clearInterval(id);
-  }, [product.image_urls.length]);
+  }, [isHovered, product.image_urls.length]);
+
+
 
   return (
     <div className="relative h-full">
@@ -18,15 +24,53 @@ function ProductCard({ product, onAdd, onRemove, getQuantity }) {
         <div className="relative transition-transform duration-300 group-hover:scale-105 group-hover:z-50 group-hover:shadow-2xl bg-white/90 rounded-lg p-4 backdrop-blur-md flex flex-col justify-between">
           <div>
             {/* Квадратное изображение со слайдером */}
-            <div className="relative w-full aspect-square overflow-hidden mb-4 rounded bg-gray-300">
-              <Image
-                src={product.image_urls[currentImage] || "/fallback.png"}
-                alt={product.name}
-                width={300}
-                height={300}
-                className="object-cover w-full h-full"
-              />
+            <div
+              className="relative w-full aspect-square overflow-hidden mb-4 rounded bg-gray-300"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <div className="relative w-full h-full">
+                {product.image_urls.map((url, index) => (
+                  <Image
+                    key={index}
+                    src={url}
+                    alt={`${product.name}-${index}`}
+                    width={300}
+                    height={300}
+                    className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-700 ease-in-out transform ${
+                      index === currentImage
+                        ? "translate-x-0 opacity-100 z-10"
+                        : "translate-x-full opacity-0 z-0"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* 👇 Стрелки появляются при наведении */}
+              {isHovered && (
+                <>
+                  <button
+                    onClick={() =>
+                      setCurrentImage((prev) =>
+                        prev === 0 ? product.image_urls.length - 1 : prev - 1
+                      )
+                    }
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/70 transition z-20"
+                  >
+                    ←
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentImage((prev) => (prev + 1) % product.image_urls.length)
+                    }
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/70 transition z-20"
+                  >
+                    →
+                  </button>
+                </>
+              )}
             </div>
+
             <h3 className="text-lg font-semibold">{product.name}</h3>
             <p className="text-sm text-gray-700 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-32 transition-all duration-300 overflow-hidden">
               {product.description}
