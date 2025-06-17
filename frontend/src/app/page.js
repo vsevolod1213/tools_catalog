@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 function ProductCard({ product, onAdd, onRemove, getQuantity }) {
   const [currentImage, setCurrentImage] = useState(0);
