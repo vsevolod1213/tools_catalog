@@ -438,6 +438,19 @@ export default function Page() {
         </div>
       )}*/}
 
+      {/* Поисковая строка в main — только для десктопа и только если !isSticky */}
+      {!isSticky && (
+        <div className="hidden sm:block fixed top-[100px] sm:top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-700 ease-in-out">
+          <input
+            type="text"
+            placeholder="Поиск товаров"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="bg-white/40 border border-gray-300 rounded-full px-6 py-4 text-base focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md w-full"
+          />
+        </div>
+      )}
+
 
 
 
