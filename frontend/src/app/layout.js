@@ -15,7 +15,7 @@ export const metadata = {
   title: "Каталог",
   description: "Описание сайта",
   icons: {
-    icon: "public/favicon.ico", // <-- добавь сюда путь к иконке
+    icon: "/favicon.ico", // <-- добавь сюда путь к иконке
   },
 };
 
