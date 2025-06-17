@@ -121,6 +121,7 @@ export default function Page() {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [phone, setPhone] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const getTotalPrice = () =>
     cart.reduce((sum, p) => {
@@ -243,26 +244,33 @@ export default function Page() {
           <div className="block sm:hidden space-y-3">
             {/* Центрированные кнопки */}
             <nav className="flex justify-center gap-2 flex-wrap text-sm">
-              <div className="relative group">
-                <button className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+              <div className="relative">
+                <button
+                  className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+                  onClick={() => setIsMenuOpen((prev) => !prev)}
+                >
                   Каталог
                 </button>
-                <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                  {categories.length > 0 ? (
-                    categories.map((cat) => (
-                      <a
-                        key={cat.id}
-                        href={`#category-${cat.id}`}
-                        className="block px-4 py-2 hover:bg-gray-200"
-                      >
-                        {cat.name}
-                      </a>
-                    ))
-                  ) : (
-                    <p className="px-4 py-2 text-gray-500">Нет категорий</p>
-                  )}
-                </div>
-              </div>
+                {isMenuOpen && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <a
+                          key={cat.id}
+                          href={`#category-${cat.id}`}
+                          className="block px-4 py-2 hover:bg-gray-200"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {cat.name}
+                        </a>
+                      ))
+                    ) : (
+                      <p className="px-4 py-2 text-gray-500">Нет категорий</p>
+                    )}
+                  </div>
+                )}
+</div>
+
 
               <a
                 href="#"
@@ -304,25 +312,32 @@ export default function Page() {
             {/* Кнопки слева */}
             <nav className="flex gap-2 text-sm">
               <div className="relative group">
-                <button className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition">
+                <button
+                  className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+                  onClick={() => setIsMenuOpen((prev) => !prev)}
+                >
                   Каталог
                 </button>
-                <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                  {categories.length > 0 ? (
-                    categories.map((cat) => (
-                      <a
-                        key={cat.id}
-                        href={`#category-${cat.id}`}
-                        className="block px-4 py-2 hover:bg-gray-200"
-                      >
-                        {cat.name}
-                      </a>
-                    ))
-                  ) : (
-                    <p className="px-4 py-2 text-gray-500">Нет категорий</p>
-                  )}
-                </div>
+                {(isMenuOpen || typeof window === "undefined") && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg transition-opacity z-50">
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <a
+                          key={cat.id}
+                          href={`#category-${cat.id}`}
+                          className="block px-4 py-2 hover:bg-gray-200"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {cat.name}
+                        </a>
+                      ))
+                    ) : (
+                      <p className="px-4 py-2 text-gray-500">Нет категорий</p>
+                    )}
+                  </div>
+                )}
               </div>
+
 
               <a
                 href="#"
@@ -341,15 +356,16 @@ export default function Page() {
 
             {/* Поиск по центру при isSticky */}
             {isSticky && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full max-w-[320px] transition-all duration-700">
+              <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full max-w-[320px] transition-all duration-700 z-40">
                 <input
                   type="text"
                   placeholder="Поиск товаров"
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  className="w-full bg-white/40 border border-gray-300 rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+                  className="z-50 pointer-events-auto w-full bg-white/40 border border-gray-300 rounded-full px-6 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
                 />
               </div>
+
             )}
 
             {/* Номер справа */}
