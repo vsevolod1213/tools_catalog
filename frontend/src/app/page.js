@@ -273,7 +273,7 @@ export default function Page() {
                   Каталог
                 </button>
                 {isMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-9999">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[100]">
                     {categories.length > 0 ? (
                       categories.map((cat) => (
                         <a
@@ -301,7 +301,7 @@ export default function Page() {
                   Услуги
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[9999]">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[100]">
                     {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
                       <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                         {item}

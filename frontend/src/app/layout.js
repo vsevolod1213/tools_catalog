@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Каталог",
+  title: "МагСервис",
   description: "Описание сайта",
   icons: {
     icon: "/favicon-v3.ico", // <-- добавь сюда путь к иконке
