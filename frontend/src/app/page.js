@@ -280,7 +280,9 @@ export default function Page() {
                           key={cat.id}
                           href={`#category-${cat.id}`}
                           className="block px-4 py-2 hover:bg-gray-200"
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={() =>{ 
+                            setTimeout(() => setIsMenuOpen(false), 100);
+                          }}
                         >
                           {cat.name}
                         </a>
@@ -359,7 +361,9 @@ export default function Page() {
                           key={cat.id}
                           href={`#category-${cat.id}`}
                           className="block px-4 py-2 hover:bg-gray-200"
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={() =>{ 
+                            setTimeout(() => setIsMenuOpen(false), 100);
+                          }}
                         >
                           {cat.name}
                         </a>
