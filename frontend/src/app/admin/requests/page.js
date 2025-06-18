@@ -117,6 +117,12 @@ function RequestsPageInner() {
                     ))}
                   </ul>
                   <div className="font-bold text-green-700">
+                    {order.services?.length > 0 && (
+                        <div className="text-sm text-gray-800 mb-1">
+                            🛠 Услуги: {order.services.join(", ")}
+                        </div>
+                        )}
+
                     Итого: {total} ₽
                   </div>
                 </div>

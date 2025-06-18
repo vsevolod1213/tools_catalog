@@ -7,7 +7,7 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { phone, items } = req.body;
+    const { phone, items, services } = req.body;
 
     if (!phone || !items || items.length === 0) {
       return res.status(400).json({ error: 'Неверные данные заказа' });
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     const { data: order, error: orderError } = await supabase
       .from('orders')
-      .insert([{ phone }])
+      .insert([{ phone, services }]) 
       .select()
       .single();
 

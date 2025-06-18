@@ -125,6 +125,9 @@ export default function Page() {
   const [phone, setPhone] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const serviceOptions = ["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"];
+
 
   const getTotalPrice = () =>
     cart.reduce((sum, p) => {
@@ -231,6 +234,7 @@ export default function Page() {
         body: JSON.stringify({
           phone,
           items: cart,
+          services: selectedServices,  // <-- добавлено
         }),
       });
 
@@ -239,6 +243,7 @@ export default function Page() {
       alert("Заказ отправлен!");
       setCart([]);
       setPhone("");
+      setSelectedServices([]); // сброс
       setShowCart(false);
     } catch (err) {
       alert("Ошибка при оформлении заказа");
@@ -519,6 +524,27 @@ export default function Page() {
               onChange={(e) => setPhone(e.target.value)}
               className="w-full border rounded px-4 py-2 mb-3"
             />
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">Дополнительные услуги</h3>
+              {serviceOptions.map((service) => (
+                <label key={service} className="block text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    checked={selectedServices.includes(service)}
+                    onChange={() => {
+                      setSelectedServices((prev) =>
+                        prev.includes(service)
+                          ? prev.filter((s) => s !== service)
+                          : [...prev, service]
+                      );
+                    }}
+                    className="mr-2"
+                  />
+                  {service}
+                </label>
+              ))}
+            </div>
+
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowCart(false)}
