@@ -15,7 +15,7 @@ export const metadata = {
   title: "МагСервис",
   description: "Описание сайта",
   icons: {
-    icon: "/favicon-v3.ico", // <-- добавь сюда путь к иконке
+    icon: "/favicon.ico", // <-- добавь сюда путь к иконке
   },
 };
 
