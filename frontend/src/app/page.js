@@ -259,12 +259,12 @@ export default function Page() {
         />
       </div>
 
-      <header className="bg-black/60 text-white shadow fixed w-full z-20">
+      <header className="bg-black/60 text-white shadow fixed w-full z-20 overflow-visible">
         <div className="container mx-auto px-4 py-3">
           {/* MOBILE (base) layout */}
           <div className="block sm:hidden space-y-3">
             {/* Центрированные кнопки */}
-            <nav className="flex justify-center gap-2 flex-wrap text-sm">
+            <nav className="flex justify-center gap-2 flex-wrap text-sm relative z-10">
               <div className="relative">
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
@@ -273,7 +273,7 @@ export default function Page() {
                   Каталог
                 </button>
                 {isMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[100]">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[999] pointer-events-auto">
                     {categories.length > 0 ? (
                       categories.map((cat) => (
                         <a
@@ -301,7 +301,7 @@ export default function Page() {
                   Услуги
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[100]">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[999]">
                     {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
                       <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                         {item}
@@ -380,7 +380,7 @@ export default function Page() {
                   Услуги
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[9999]">
+                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[999]">
                     {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
                       <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                         {item}
