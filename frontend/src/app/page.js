@@ -268,7 +268,10 @@ export default function Page() {
               <div className="relative">
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-                  onClick={() => setIsMenuOpen((prev) => !prev)}
+                  onClick={() => {
+                    setIsMenuOpen((prev) => !prev);
+                    setIsServicesOpen(false); // <- закрыть другой
+                  }}
                 >
                   Каталог
                 </button>
@@ -280,8 +283,9 @@ export default function Page() {
                           key={cat.id}
                           href={`#category-${cat.id}`}
                           className="block px-4 py-2 hover:bg-gray-200"
-                          onClick={() =>{ 
-                            setTimeout(() => setIsMenuOpen(false), 100);
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            setIsServicesOpen(false);
                           }}
                         >
                           {cat.name}
@@ -298,7 +302,10 @@ export default function Page() {
               <div className="relative">
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-                  onClick={() => setIsServicesOpen((prev) => !prev)}
+                  onClick={() => {
+                    setIsServicesOpen((prev) => !prev);
+                    setIsMenuOpen(false); // <- закрыть каталог
+                  }}
                 >
                   Услуги
                 </button>
@@ -349,7 +356,10 @@ export default function Page() {
               <div className="relative group" ref={catalogRef}>
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-                  onClick={() => setIsMenuOpen((prev) => !prev)}
+                  onClick={() => {
+                    setIsMenuOpen((prev) => !prev);
+                    setIsServicesOpen(false); // <- закрыть другой
+                  }}
                 >
                   Каталог
                 </button>
@@ -361,8 +371,9 @@ export default function Page() {
                           key={cat.id}
                           href={`#category-${cat.id}`}
                           className="block px-4 py-2 hover:bg-gray-200"
-                          onClick={() =>{ 
-                            setTimeout(() => setIsMenuOpen(false), 100);
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            setIsServicesOpen(false);
                           }}
                         >
                           {cat.name}
@@ -379,7 +390,10 @@ export default function Page() {
               <div className="relative group" ref={servicesRef}>
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-                  onClick={() => setIsServicesOpen((prev) => !prev)}
+                  onClick={() => {
+                    setIsServicesOpen((prev) => !prev);
+                    setIsMenuOpen(false); // <- закрыть каталог
+                  }}
                 >
                   Услуги
                 </button>
