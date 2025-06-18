@@ -14,6 +14,7 @@ export default async function handler(req, res) {
       id,
       phone,
       created_at,
+      services,
       order_items (
         quantity,
         product:product_id (
