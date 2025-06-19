@@ -127,6 +127,9 @@ export default function Page() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
   const serviceOptions = ["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"];
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const menuTimer = useRef(null);
+  const servicesTimer = useRef(null);
 
 
   const getTotalPrice = () =>
@@ -186,9 +189,12 @@ export default function Page() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      clearTimeout(menuTimer.current);
+      clearTimeout(servicesTimer.current);
     };
   }, []);
 
+  
   const getQuantity = (productId) => {
     const item = cart.find((p) => p.id === productId);
     return item ? item.quantity : 0;
@@ -316,11 +322,10 @@ export default function Page() {
                 </button>
                 {isServicesOpen && (
                   <div className="absolute left-0 mt-2 w-64 bg-white text-black rounded shadow-lg z-[999] p-2">
-                    {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
-                      <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                        {item}
-                      </div>
-                    ))}
+                    <div className="text-sm px-4 py-2 text-gray-800">
+                      Монтаж, Ремонт, Обслуживание, Реконструкция
+                    </div>
+
                     <div className="px-4 pt-3 text-xs text-gray-600 italic">
                       Стоимость уточняется у менеджера
                     </div>
@@ -338,17 +343,17 @@ export default function Page() {
               </button>
             </nav>
 
-            {/* Выпадающее меню "Для связи" на мобилке */}
-            <div className="relative text-center text-xs text-gray-200 group">
-              <div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
-                Для связи
-              </div>
-              <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-white text-black rounded shadow-lg p-4 w-[280px] opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 z-50">
-                <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (812) 345 25-25</span></div>
-                <div className="text-sm">📧 Почта: <span className="font-semibold">info@magclimat.ru</span></div>
-              </div>
+            <div className="relative group" onMouseEnter={() => setIsContactOpen(true)} onMouseLeave={() => setTimeout(() => setIsContactOpen(false), 300)}>
+              <div className="cursor-pointer ...">Для связи</div>
+              {isContactOpen && (
+                <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50 select-all">
+                  <div className="text-sm font-medium mb-2">Контактная информация:</div>
+                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (812) 345 25-25</span></div>
+                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">info@magclimat.ru</span></div>
+                </div>
+              )}
             </div>
+
 
 
             {/* Поисковая строка — только если isSticky */}
@@ -369,7 +374,21 @@ export default function Page() {
           <div className="hidden sm:flex items-center justify-between">
             {/* Кнопки слева */}
             <nav className="flex gap-2 text-sm">
-              <div className="relative group" ref={catalogRef}>
+              <div
+                className="relative group"
+                ref={catalogRef}
+                onMouseEnter={() => {
+                  if (menuTimer.current) clearTimeout(menuTimer.current);
+                  setIsMenuOpen(true);
+                  setIsServicesOpen(false);
+                }}
+                onMouseLeave={() => {
+                  menuTimer.current = setTimeout(() => {
+                    setIsMenuOpen(false);
+                  }, 300);
+                }}
+              >
+
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
                   onClick={() => {
@@ -403,7 +422,20 @@ export default function Page() {
               </div>
 
 
-              <div className="relative group" ref={servicesRef}>
+              <div
+                className="relative group"
+                ref={servicesRef}
+                onMouseEnter={() => {
+                  if (servicesTimer.current) clearTimeout(servicesTimer.current);
+                  setIsServicesOpen(true);
+                  setIsMenuOpen(false);
+                }}
+                onMouseLeave={() => {
+                  servicesTimer.current = setTimeout(() => {
+                    setIsServicesOpen(false);
+                  }, 300);
+                }}
+              >
                 <button
                   className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
                   onClick={() => {
@@ -415,11 +447,10 @@ export default function Page() {
                 </button>
                 {isServicesOpen && (
                   <div className="absolute left-0 mt-2 w-64 bg-white text-black rounded shadow-lg z-[999] p-2">
-                    {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
-                      <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                        {item}
-                      </div>
-                    ))}
+                    <div className="text-sm px-4 py-2 text-gray-800">
+                      Монтаж, Ремонт, Обслуживание, Реконструкция
+                    </div>
+
                     <div className="px-4 pt-3 text-xs text-gray-600 italic">
                       Стоимость уточняется у менеджера
                     </div>
@@ -451,17 +482,17 @@ export default function Page() {
 
             )}
 
-            {/* Выпадающее меню "Для связи" */}
-            <div className="relative group text-sm text-gray-200 whitespace-nowrap cursor-pointer">
-              <div className="text-white font-semibold px-4 py-2 hover:text-orange-400 transition">
-                Для связи
-              </div>
-              <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 z-50">
-                <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (812) 345 25-25</span></div>
-                <div className="text-sm">📧 Почта: <span className="font-semibold">info@magclimat.ru</span></div>
-              </div>
+            <div className="relative group" onMouseEnter={() => setIsContactOpen(true)} onMouseLeave={() => setTimeout(() => setIsContactOpen(false), 300)}>
+              <div className="cursor-pointer ...">Для связи</div>
+              {isContactOpen && (
+                <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50 select-all">
+                  <div className="text-sm font-medium mb-2">Контактная информация:</div>
+                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (812) 345 25-25</span></div>
+                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">info@magclimat.ru</span></div>
+                </div>
+              )}
             </div>
+
 
           </div>
         </div>
