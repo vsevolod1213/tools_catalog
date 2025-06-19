@@ -322,9 +322,12 @@ export default function Page() {
                 </button>
                 {isServicesOpen && (
                   <div className="absolute left-0 mt-2 w-64 bg-white text-black rounded shadow-lg z-[999] p-2">
-                    <div className="text-sm px-4 py-2 text-gray-800">
-                      Монтаж, Ремонт, Обслуживание, Реконструкция
-                    </div>
+                    <ul className="text-sm px-4 py-2 text-gray-800 space-y-1 list-disc list-inside">
+                      {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((service) => (
+                        <li key={service}>{service}</li>
+                      ))}
+                    </ul>
+
 
                     <div className="px-4 pt-3 text-xs text-gray-600 italic">
                       Стоимость уточняется у менеджера
@@ -447,9 +450,12 @@ export default function Page() {
                 </button>
                 {isServicesOpen && (
                   <div className="absolute left-0 mt-2 w-64 bg-white text-black rounded shadow-lg z-[999] p-2">
-                    <div className="text-sm px-4 py-2 text-gray-800">
-                      Монтаж, Ремонт, Обслуживание, Реконструкция
-                    </div>
+                    <ul className="text-sm px-4 py-2 text-gray-800 space-y-1 list-disc list-inside">
+                      {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((service) => (
+                        <li key={service}>{service}</li>
+                      ))}
+                    </ul>
+
 
                     <div className="px-4 pt-3 text-xs text-gray-600 italic">
                       Стоимость уточняется у менеджера
