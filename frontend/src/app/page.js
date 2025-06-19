@@ -530,6 +530,28 @@ export default function Page() {
                 );
               })}
             </ul>
+            <div className="mb-4">
+              <h3 className="font-semibold text-base mb-2">Дополнительные услуги</h3>
+              <div className="space-y-2">
+                {serviceOptions.map((service) => (
+                  <label key={service} className="flex items-center text-base text-gray-800">
+                    <input
+                      type="checkbox"
+                      checked={selectedServices.includes(service)}
+                      onChange={() => {
+                        setSelectedServices((prev) =>
+                          prev.includes(service)
+                            ? prev.filter((s) => s !== service)
+                            : [...prev, service]
+                        );
+                      }}
+                      className="w-5 h-5 mr-3 accent-orange-600"
+                    />
+                    {service}
+                  </label>
+                ))}
+              </div>
+            </div>
             <p className="font-bold mb-2">Итого: {getTotalPrice()} ₽</p>
             <input
               type="tel"
@@ -538,26 +560,8 @@ export default function Page() {
               onChange={(e) => setPhone(e.target.value)}
               className="w-full border rounded px-4 py-2 mb-3"
             />
-            <div className="mb-4">
-              <h3 className="font-semibold mb-2">Дополнительные услуги</h3>
-              {serviceOptions.map((service) => (
-                <label key={service} className="block text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    checked={selectedServices.includes(service)}
-                    onChange={() => {
-                      setSelectedServices((prev) =>
-                        prev.includes(service)
-                          ? prev.filter((s) => s !== service)
-                          : [...prev, service]
-                      );
-                    }}
-                    className="mr-2"
-                  />
-                  {service}
-                </label>
-              ))}
-            </div>
+            
+
 
             <div className="flex justify-end gap-2">
               <button
