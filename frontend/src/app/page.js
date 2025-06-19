@@ -315,14 +315,18 @@ export default function Page() {
                   Услуги
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[999]">
+                  <div className="absolute left-0 mt-2 w-64 bg-white text-black rounded shadow-lg z-[999] p-2">
                     {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
                       <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                         {item}
                       </div>
                     ))}
+                    <div className="px-4 pt-3 text-xs text-gray-600 italic">
+                      Стоимость уточняется у менеджера
+                    </div>
                   </div>
                 )}
+
               </div>
 
 
@@ -410,14 +414,18 @@ export default function Page() {
                   Услуги
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-[999]">
+                  <div className="absolute left-0 mt-2 w-64 bg-white text-black rounded shadow-lg z-[999] p-2">
                     {["Монтаж", "Ремонт", "Обслуживание", "Реконструкция"].map((item) => (
                       <div key={item} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                         {item}
                       </div>
                     ))}
+                    <div className="px-4 pt-3 text-xs text-gray-600 italic">
+                      Стоимость уточняется у менеджера
+                    </div>
                   </div>
                 )}
+
               </div>
 
 
@@ -519,17 +527,26 @@ export default function Page() {
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
             <h2 className="text-xl font-bold mb-4">Ваш заказ</h2>
-            <ul className="mb-4 max-h-60 overflow-y-auto">
+            <ul className="mb-4 max-h-60 overflow-y-auto space-y-3">
               {cart.map((item) => {
                 const prod = products.find((p) => p.id === item.id);
                 return (
-                  <li key={item.id} className="flex justify-between mb-2">
-                    <span>{prod?.name}</span>
-                    <span>{item.quantity} × {prod?.price} ₽</span>
+                  <li
+                    key={item.id}
+                    className="flex justify-between items-start bg-gray-100 rounded p-3 shadow-sm"
+                  >
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-gray-800">{prod?.name}</div>
+                      <div className="text-xs text-gray-500">× {item.quantity} шт.</div>
+                    </div>
+                    <div className="text-sm font-semibold text-right whitespace-nowrap">
+                      {prod?.price * item.quantity} ₽
+                    </div>
                   </li>
                 );
               })}
             </ul>
+
             <div className="mb-4">
               <h3 className="font-semibold text-base mb-2">Дополнительные услуги</h3>
               <div className="space-y-2">
@@ -552,7 +569,15 @@ export default function Page() {
                 ))}
               </div>
             </div>
-            <p className="font-bold mb-2">Итого: {getTotalPrice()} ₽</p>
+            <p className="font-bold mb-2">
+              Итого: {getTotalPrice()} ₽
+              {selectedServices.length > 0 && (
+                <span className="block text-sm font-normal text-gray-600">
+                  + стоимость услуг уточняется у менеджера
+                </span>
+              )}
+            </p>
+
             <input
               type="tel"
               placeholder="Номер телефона"
