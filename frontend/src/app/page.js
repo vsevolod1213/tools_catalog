@@ -334,11 +334,18 @@ export default function Page() {
               </button>
             </nav>
 
-            {/* Телефон по центру */}
-            <div className="text-center text-xs text-gray-200">
-              Номер для связи:{" "}
-              <span className="text-white font-semibold">+7 (812) 345 25-25</span>
+            {/* Выпадающее меню "Для связи" на мобилке */}
+            <div className="relative text-center text-xs text-gray-200 group">
+              <div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
+                Для связи
+              </div>
+              <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-white text-black rounded shadow-lg p-4 w-[280px] opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 z-50">
+                <div className="text-sm font-medium mb-2">Контактная информация:</div>
+                <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (812) 345 25-25</span></div>
+                <div className="text-sm">📧 Почта: <span className="font-semibold">info@magclimat.ru</span></div>
+              </div>
             </div>
+
 
             {/* Поисковая строка — только если isSticky */}
             {isSticky && (
@@ -436,11 +443,18 @@ export default function Page() {
 
             )}
 
-            {/* Номер справа */}
-            <div className="text-gray-200 text-sm whitespace-nowrap">
-              Номер для связи:{" "}
-              <span className="text-white font-semibold">+7 (812) 345 25-25</span>
+            {/* Выпадающее меню "Для связи" */}
+            <div className="relative group text-sm text-gray-200 whitespace-nowrap cursor-pointer">
+              <div className="text-white font-semibold px-4 py-2 hover:text-orange-400 transition">
+                Для связи
+              </div>
+              <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 z-50">
+                <div className="text-sm font-medium mb-2">Контактная информация:</div>
+                <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (812) 345 25-25</span></div>
+                <div className="text-sm">📧 Почта: <span className="font-semibold">info@magclimat.ru</span></div>
+              </div>
             </div>
+
           </div>
         </div>
       </header>
