@@ -106,7 +106,7 @@ function RequestsPageInner() {
                 >
                   <div className="text-sm text-gray-600 mb-2">
                     📞 {order.phone} — 🕒{" "}
-                    {new Date(order.created_at).toLocaleString()}
+                    {new Date(order.created_at).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}
                   </div>
                   <ul className="mb-2">
                     {order.order_items.map((item, idx) => (

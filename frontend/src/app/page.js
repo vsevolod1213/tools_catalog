@@ -344,12 +344,12 @@ export default function Page() {
             </nav>
 
             <div className="relative group" onMouseEnter={() => setIsContactOpen(true)} onMouseLeave={() => setTimeout(() => setIsContactOpen(false), 300)}>
-              <div className="cursor-pointer ...">Для связи</div>
+              <div className="cursor-pointer ...">Связь с нами:</div>
               {isContactOpen && (
                 <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50 select-all">
                   <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (812) 345 25-25</span></div>
-                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">info@magclimat.ru</span></div>
+                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (960) 240 45-02</span></div>
+                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">makeeva-albina@list.ru</span></div>
                 </div>
               )}
             </div>
@@ -483,12 +483,12 @@ export default function Page() {
             )}
 
             <div className="relative group" onMouseEnter={() => setIsContactOpen(true)} onMouseLeave={() => setTimeout(() => setIsContactOpen(false), 300)}>
-              <div className="cursor-pointer ...">Для связи</div>
+              <div className="cursor-pointer ...">Связь с нами:</div>
               {isContactOpen && (
                 <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50 select-all">
                   <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (812) 345 25-25</span></div>
-                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">info@magclimat.ru</span></div>
+                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (960) 240 45-02</span></div>
+                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">makeeva-albina@list.ru</span></div>
                 </div>
               )}
             </div>
