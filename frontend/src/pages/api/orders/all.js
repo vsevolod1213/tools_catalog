@@ -1,6 +1,14 @@
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
+
 export default async function handler(req, res) {
-  if (req.method !== "GET")
+  if (req.method !== "GET") {
     return res.status(405).json({ error: "Метод не разрешён" });
+  }
 
   const { data, error } = await supabase
     .from("orders")
@@ -19,12 +27,16 @@ export default async function handler(req, res) {
     `)
     .order("created_at", { ascending: false });
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
 
-  // 👇 Преобразование в безопасный ISO-формат с Z
+  // Безопасное преобразование created_at
   const normalized = data.map((order) => ({
     ...order,
-    created_at: new Date(order.created_at).toISOString(),
+    created_at: order.created_at
+      ? new Date(order.created_at).toISOString()
+      : null,
   }));
 
   return res.status(200).json({ orders: normalized });
