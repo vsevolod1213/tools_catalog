@@ -533,53 +533,54 @@
 
               )}
 
-              <div
-                className="relative group"
-                onMouseEnter={() => {
-                  if (contactTimer.current) clearTimeout(contactTimer.current);
-                  setIsContactOpen(true);
-                }}
-                onMouseLeave={() => {
-                  contactTimer.current = setTimeout(() => {
-                    setIsContactOpen(false);
-                  }, 300);
-                }}
-              >
-                <div className="text-white font-semibold px-5 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer whitespace-nowrap">
-                  Связь с нами
+              <div className="flex items-center gap-6 pl-4 ml-auto">
+                <div
+                  className="relative group"
+                  onMouseEnter={() => {
+                    if (contactTimer.current) clearTimeout(contactTimer.current);
+                    setIsContactOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    contactTimer.current = setTimeout(() => {
+                      setIsContactOpen(false);
+                    }, 300);
+                  }}
+                >
+                  <div className="text-white font-semibold px-6 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer whitespace-nowrap">
+                    Связь с нами
+                  </div>
+
+                  {isContactOpen && (
+                    <div
+                      className="absolute right-0 mt-2 bg-white text-black rounded shadow-lg p-4 w-76 transition-all duration-300 z-[50]"
+                      onMouseEnter={() => {
+                        if (contactTimer.current) clearTimeout(contactTimer.current);
+                      }}
+                      onMouseLeave={() => {
+                        contactTimer.current = setTimeout(() => {
+                          setIsContactOpen(false);
+                        }, 300);
+                      }}
+                    >
+                      <div className="text-sm font-medium mb-2">Контактная информация:</div>
+                      <div className="text-sm mb-1">
+                        📞 Телефон: <span className="font-semibold">+7 (960) 240 45-02</span>
+                      </div>
+                      <div className="text-sm">
+                        📧 Почта: <span className="font-semibold">makeeva-albina@list.ru</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {isContactOpen && (
-                  <div
-                    className="absolute right-0 mt-2 bg-white text-black rounded shadow-lg p-4 w-76 transition-all duration-300 z-[50]"
-                    onMouseEnter={() => {
-                      if (contactTimer.current) clearTimeout(contactTimer.current);
-                    }}
-                    onMouseLeave={() => {
-                      contactTimer.current = setTimeout(() => {
-                        setIsContactOpen(false);
-                      }, 300);
-                    }}
-                  >
-                    <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                    <div className="text-sm mb-1">
-                      📞 Телефон: <span className="font-semibold">+7 (960) 240 45-02</span>
-                    </div>
-                    <div className="text-sm">
-                      📧 Почта: <span className="font-semibold">makeeva-albina@list.ru</span>
-                    </div>
-                  </div>
-                )}
+                <Image
+                  src="/favicon-v2.ico"
+                  alt="Логотип"
+                  width={52}
+                  height={52}
+                  className="mr-2"
+                />
               </div>
-
-              {/* логотип — увеличим и выставим справа */}
-              <Image
-                src="/favicon-v2.ico"
-                alt="Логотип"
-                width={48} // больше
-                height={48}
-                className="ml-4"
-              />
             </div>
             
           </div>
