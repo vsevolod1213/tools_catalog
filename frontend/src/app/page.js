@@ -370,7 +370,7 @@
                 }}
                 >
                 {/*<div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
-                  Связь с нами:
+                  Связь с нами
                 </div>*/}
 
                 {isContactOpen && (
@@ -412,7 +412,7 @@
                     setIsServicesOpen(false); // добавить
                   }}
                 >
-                  Связь с нами:
+                  Связь с нами
                 </div>
               </div>
 
@@ -521,7 +521,7 @@
 
               {/* Поиск по центру при isSticky */}
               {isSticky && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full max-w-[320px] transition-all duration-700 z-40">
+                <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full max-w-[320px] transition-all duration-700 z-10">
                   <input
                     type="text"
                     placeholder="Поиск товаров"
@@ -546,7 +546,7 @@
                 }}
                 >
                 <div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
-                  Связь с нами:
+                  Связь с нами
                 </div>
 
                 {isContactOpen && (
@@ -565,12 +565,17 @@
                     <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (960) 240 45-02</span></div>
                     <div className="text-sm">📧 Почта: <span className="font-semibold">makeeva-albina@list.ru</span></div>
                   </div>
-                )}
+                )}       
               </div>
-
-
-
+              <Image
+                src="/favicon-v2.ico"
+                alt="Логотип"
+                width={36}
+                height={36}
+                className="ml-4"
+            />
             </div>
+            
           </div>
         </header>
 
