@@ -130,6 +130,7 @@ export default function Page() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const menuTimer = useRef(null);
   const servicesTimer = useRef(null);
+  const contactTimer = useRef<NodeJS.Timeout | null>(null);
 
 
   const getTotalPrice = () =>
@@ -347,12 +348,35 @@ export default function Page() {
             </nav>
 
             <div className="relative group" onMouseEnter={() => setIsContactOpen(true)} onMouseLeave={() => setTimeout(() => setIsContactOpen(false), 300)}>
-              <div className="cursor-pointer ...">Связь с нами:</div>
+              <div
+                className="cursor-pointer px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
+                onMouseEnter={() => {
+                  if (contactTimer.current) clearTimeout(contactTimer.current);
+                  setIsContactOpen(true);
+                }}
+                onMouseLeave={() => {
+                  contactTimer.current = setTimeout(() => {
+                    setIsContactOpen(false);
+                  }, 300);
+                }}
+              >
+                Связь с нами
+              </div>
               {isContactOpen && (
-                <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50 select-all">
+                <div
+                  className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50"
+                  onMouseEnter={() => {
+                    if (contactTimer.current) clearTimeout(contactTimer.current);
+                  }}
+                  onMouseLeave={() => {
+                    contactTimer.current = setTimeout(() => {
+                      setIsContactOpen(false);
+                    }, 300);
+                  }}
+                >
                   <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (960) 240 45-02</span></div>
-                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">makeeva-albina@list.ru</span></div>
+                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (960) 240 45-02</span></div>
+                  <div className="text-sm">📧 Почта: <span className="font-semibold">makeeva-albina@list.ru</span></div>
                 </div>
               )}
             </div>
@@ -489,12 +513,24 @@ export default function Page() {
             )}
 
             <div className="relative group" onMouseEnter={() => setIsContactOpen(true)} onMouseLeave={() => setTimeout(() => setIsContactOpen(false), 300)}>
-              <div className="cursor-pointer ...">Связь с нами:</div>
+              <div
+                className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50"
+                onMouseEnter={() => {
+                  if (contactTimer.current) clearTimeout(contactTimer.current);
+                }}
+                onMouseLeave={() => {
+                  contactTimer.current = setTimeout(() => {
+                    setIsContactOpen(false);
+                  }, 300);
+                }}
+              >
+                Связь с нами
+              </div>
               {isContactOpen && (
                 <div className="absolute right-0 mt-1 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50 select-all">
                   <div className="text-sm font-medium mb-2">Контактная информация:</div>
-                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold select-all">+7 (960) 240 45-02</span></div>
-                  <div className="text-sm">📧 Почта: <span className="font-semibold select-all">makeeva-albina@list.ru</span></div>
+                  <div className="text-sm mb-1">📞 Телефон: <span className="font-semibold">+7 (960) 240 45-02</span></div>
+                  <div className="text-sm">📧 Почта: <span className="font-semibold">makeeva-albina@list.ru</span></div>
                 </div>
               )}
             </div>
