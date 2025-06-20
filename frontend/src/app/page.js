@@ -366,7 +366,7 @@ export default function Page() {
 
               {isContactOpen && (
                 <div
-                  className="absolute right-0 mt-2 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50"
+                  className="absolute right-0 mt-2 bg-white text-black rounded shadow-lg p-4 min-w-[16rem] transition-all duration-300 z-50"
                   onMouseEnter={() => {
                     if (contactTimer.current) clearTimeout(contactTimer.current);
                   }}
@@ -533,7 +533,7 @@ export default function Page() {
 
               {isContactOpen && (
                 <div
-                  className="absolute right-0 mt-2 bg-white text-black rounded shadow-lg p-4 w-64 transition-all duration-300 z-50"
+                  className="absolute right-0 mt-2 bg-white text-black rounded shadow-lg p-4 min-w-[16rem] transition-all duration-300 z-50"
                   onMouseEnter={() => {
                     if (contactTimer.current) clearTimeout(contactTimer.current);
                   }}
