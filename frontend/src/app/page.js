@@ -618,7 +618,7 @@
 
 
 
-        <main className={`pb-32 px-6 container mx-auto ${isSticky ? 'pt-52' : 'pt-64'}`}>
+        <main className={`pb-32 px-6 container mx-auto ${isSticky ? 'pt-45' : 'pt-45'}`}>
           {categories.map((cat) => {
             const categoryProducts = filteredProducts.filter((p) => p.category_id === cat.id);
             if (categoryProducts.length === 0) return null;
