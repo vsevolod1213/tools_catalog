@@ -360,11 +360,9 @@ export default function Page() {
                 }, 300);
               }}
               >
-              <button
-                className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-              >
-                Связь с нами
-              </button>
+              <div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
+                Связь с нами:
+              </div>
 
               {isContactOpen && (
                 <div
@@ -529,11 +527,9 @@ export default function Page() {
                 }, 300);
               }}
               >
-              <button
-                className="px-4 py-2 bg-orange-600/70 hover:bg-orange-600/90 text-white rounded-full shadow transition"
-              >
-                Связь с нами
-              </button>
+              <div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
+                Связь с нами:
+              </div>
 
               {isContactOpen && (
                 <div
