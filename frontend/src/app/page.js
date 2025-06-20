@@ -130,7 +130,8 @@ export default function Page() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const menuTimer = useRef(null);
   const servicesTimer = useRef(null);
-  const contactTimer = useRef<NodeJS.Timeout | null>(null);
+  const contactTimer = useRef(null);
+
 
 
   const getTotalPrice = () =>
