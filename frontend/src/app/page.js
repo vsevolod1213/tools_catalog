@@ -603,7 +603,7 @@
 
         {/* Поисковая строка в main — только для десктопа и только если !isSticky */}
         {!isSticky && (
-          <div className="hidden sm:block fixed top-[100px] sm:top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-30 transition-all duration-700 ease-in-out">
+          <div className="hidden sm:block fixed top-[100px] sm:top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-10 transition-all duration-700 ease-in-out">
             <input
               type="text"
               placeholder="Поиск товаров"
