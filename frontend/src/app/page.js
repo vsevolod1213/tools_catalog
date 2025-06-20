@@ -360,9 +360,9 @@ export default function Page() {
                 }, 300);
               }}
               >
-              <div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
+              {/*<div className="text-white font-semibold inline-block px-4 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer">
                 Связь с нами:
-              </div>
+              </div>*/}
 
               {isContactOpen && (
                 <div
@@ -386,18 +386,23 @@ export default function Page() {
 
 
 
-            {/* Поисковая строка — только если isSticky */}
-            {isSticky && (
-              <div className="w-full px-2 transition-all duration-700">
-                <input
-                  type="text"
-                  placeholder="Поиск товаров"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  className="w-full bg-white/40 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
-                />
+            <div className="w-full px-2 flex justify-between items-center mt-2">
+              <input
+                type="text"
+                placeholder="Поиск товаров"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="flex-1 mr-2 bg-white/40 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 text-black shadow-md backdrop-blur-md"
+              />
+
+              <div
+                className="text-white font-semibold px-3 py-2 bg-transparent rounded hover:text-orange-400 cursor-pointer whitespace-nowrap"
+                onClick={() => setIsContactOpen((prev) => !prev)}
+              >
+                Связь с нами:
               </div>
-            )}
+            </div>
+
           </div>
 
           {/* DESKTOP layout (sm and up) */}
