@@ -521,7 +521,7 @@
 
               {/* Поиск по центру при isSticky */}
               {isSticky && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-[16px] w-full max-w-[320px] transition-all duration-700 z-10">
+                <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-full max-w-[320px] transition-all duration-700 z-10">
                   <input
                     type="text"
                     placeholder="Поиск товаров"
@@ -604,7 +604,7 @@
 
         {/* Поисковая строка в main — только для десктопа и только если !isSticky */}
         {!isSticky && (
-          <div className="hidden sm:block fixed top-[100px] sm:top-[72px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-10 transition-all duration-700 ease-in-out">
+          <div className="hidden sm:block fixed top-[120px] sm:top-[90px] left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-10 transition-all duration-700 ease-in-out">
             <input
               type="text"
               placeholder="Поиск товаров"
@@ -618,7 +618,7 @@
 
 
 
-        <main className={`pb-32 px-6 container mx-auto ${isSticky ? 'pt-40' : 'pt-45'}`}>
+        <main className={`pb-32 px-6 container mx-auto ${isSticky ? 'pt-52' : 'pt-64'}`}>
           {categories.map((cat) => {
             const categoryProducts = filteredProducts.filter((p) => p.category_id === cat.id);
             if (categoryProducts.length === 0) return null;
