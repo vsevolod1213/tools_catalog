@@ -143,18 +143,30 @@ function EditProductPageInner() {
               onChange={handleImageUpload}
               className="w-full px-3 py-2 rounded border bg-white"
             />
-            <div className="flex flex-wrap gap-2">
-              {imageUrls.map((url, idx) => (
+           <div className="flex flex-wrap gap-2">
+            {imageUrls.map((url, idx) => (
+              <div key={idx} className="relative inline-block">
                 <Image
-                  key={idx}
                   src={url}
                   alt={`img-${idx}`}
                   width={100}
                   height={100}
                   className="rounded border"
                 />
-              ))}
-            </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImageUrls((prev) => prev.filter((_, i) => i !== idx));
+                  }}
+                  className="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                  title="Удалить"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+
             <button
               type="submit"
               disabled={saving}
