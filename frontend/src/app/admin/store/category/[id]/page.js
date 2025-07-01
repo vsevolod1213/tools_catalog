@@ -118,14 +118,21 @@ export default function ProductsInCategoryPage() {
                   className="border-b py-2 flex justify-between items-center"
                 >
                   <span className="font-medium text-gray-800">{p.name}</span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleDelete(p.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full shadow"
-                    >
-                      🗑️ Удалить
-                    </button>
-                  </div>
+                 <div className="flex gap-2">
+                  <Link
+                    href={`/admin/edit-product?productId=${p.id}&categoryId=${id}&admin=${adminCode}`}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-full shadow"
+                  >
+                    ✏️ Редактировать
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(p.id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full shadow"
+                  >
+                    🗑️ Удалить
+                  </button>
+                </div>
+
                 </li>
               ))}
             </ul>
