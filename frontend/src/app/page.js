@@ -72,9 +72,12 @@
               </div>
 
               <h3 className="text-lg font-semibold">{product.name}</h3>
-              <p className="whitespace-pre-line text-sm text-gray-700 transition-all duration-300 overflow-hidden
-                sm:opacity-0 sm:max-h-0 sm:group-hover:opacity-100 sm:group-hover:max-h-48
-              ">
+              <p
+                className="whitespace-pre-line text-sm text-gray-700 transition-all duration-300 overflow-hidden
+                  sm:opacity-0 sm:max-h-0 sm:group-hover:opacity-100 sm:group-hover:max-h-48
+                  sm:group-hover:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 pr-2"
+                style={{ maxHeight: '12rem' }}
+              >
                 {product.description}
               </p>
 
